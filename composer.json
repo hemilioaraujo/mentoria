@@ -1,0 +1,13 @@
+{
+    "name": "hemilio/mentoria",
+    "description": "Projeto da mentoria",
+    "authors": [
+        {
+            "name": "hemilioaraujo",
+            "email": "hemilioaraujo@gmail.com"
+        }
+    ],
+    "require": {
+        "friendsofphp/php-cs-fixer": "^3.1"
+    }
+}
