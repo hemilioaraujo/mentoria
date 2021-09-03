@@ -18,7 +18,7 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ```
 
-Se quiser definir como comando global no linux, basta copiar para o diretório `bin`:
+Se quiser definir como comando global no **linux**, basta copiar para o diretório `bin`:
 
 ```shell
 sudo mv composer.phar /usr/local/bin/composer
@@ -72,4 +72,14 @@ composer remove monolog/monolog
 ## Exibir informação sobre pacotes instalados
 ```shell
 composer show
+```
+
+## Atualizando alterações do composer.json
+```shell
+composer dump-autoload
+```
+
+## Atualizando o composer
+```shell
+composer self-update
 ```
