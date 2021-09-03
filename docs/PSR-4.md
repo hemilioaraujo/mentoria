@@ -1,6 +1,6 @@
 # PSR-4
 
-**PSR** _PHP Standard Recommendation_
+**PSR** *PHP Standard Recommendation*
 
 ## O que é?
 
