@@ -8,6 +8,21 @@ São recomendações de padrões básicos de codificação em php. Esta PSR defi
 
 O autoload facilita o uso de classes no decorrer do projeto, pois, conforme o crescimento do mesmo as complicações de uso das classes vão aumentando.
 
+## Especificação
+
+1. O termo "class" refere-se a classes, interfaces, traits e outras estruturas semelhantes.
+2. Um nome de classe totalmente qualificado tem o seguinte formato:
+   `\<NomeDoNamespace>(\<NomeDoSubNamespace>)*\<NomeDaClasse>`
+    1. O namespace  **DEVE** ter um nome de namespace como nível máximo, também conhecido como "vendor namespace".
+    2. O namespace **PODE** ter um ou mais sub-namespaces.
+    3. O namespace **DEVE** ter um nome de classe final.
+    4. Underscore(sublinhado) não tem significado especial em nenhum ponto do namespace.
+    5. Caracteres alfabéticos **PODEM** ter qualquer combinação de minúsculo com maiúsculo em todo namespace.
+    6. Todos os nomes de classes **DEVEM** ser referenciados diferenciando minúsculas e maiúsculas.
+ 3. Quando estiver carregando um arquivo que corresponde a um classname:
+    1. TODO:
+
+
 Pense no seguinte conjunto de diretórios e arquivos:
 
 ```shell
