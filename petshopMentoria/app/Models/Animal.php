@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Animal extends Model
 {
     use HasFactory;
-    private $table = 'animais';
+    protected $table = 'animais';
+    protected $fillable = ['nome', 'idade', 'tipo', 'raca'];
+    // identificador único, nome, idade, se é gato ou cachorro e sua respectiva raça; 
+    // Além do nome e telefone para contato de seu dono.
 }
