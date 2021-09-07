@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AnimalController;
+use App\Http\Controllers\api\TutorController;
 use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('/animais', AnimalController::class);
+Route::apiResource('/tutores', TutorController::class);
