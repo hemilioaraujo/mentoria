@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Classes\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tutor\TutorRequest;
 use App\Models\Tutor;
@@ -17,8 +18,8 @@ class TutorController extends Controller
      */
     public function index()
     {
-        // return ResJ::json(Tutor::all(), 200);
-        return Response(Tutor::all(), 200);
+        // return ResJ::json(Tutor::all(), HttpResponses::HTTP_OK);
+        return Response(Tutor::all(), HttpResponses::HTTP_OK);
     }
 
     /**
@@ -30,7 +31,7 @@ class TutorController extends Controller
     public function store(TutorRequest $request)
     {
         $tutor = Tutor::create($request->all());
-        return Response($tutor, 201);
+        return Response($tutor, HttpResponses::HTTP_CREATED);
     }
 
     /**
@@ -43,12 +44,12 @@ class TutorController extends Controller
     {
         $tutor = Tutor::find($id);
         if ($tutor) {
-            return Response($tutor, 200);
+            return Response($tutor, HttpResponses::HTTP_OK);
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
     }
 
@@ -64,13 +65,13 @@ class TutorController extends Controller
         if (Tutor::whereId($id)->update($request->all())) {
             return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
-                200
+                HttpResponses::HTTP_OK
             );
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
     }
 
@@ -85,13 +86,13 @@ class TutorController extends Controller
         if (Tutor::destroy($id)) {
             return Response(
                 ['status' => 'Recurso excluído com sucesso.'],
-                200
+                HttpResponses::HTTP_OK
             );
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
     }
 }

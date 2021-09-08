@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Classes\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Animal\AnimalRequest;
 use App\Models\Animal;
@@ -18,7 +19,7 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        return Response(Animal::all(), 200);
+        return Response(Animal::all(), HttpResponses::HTTP_OK);
     }
 
     /**
@@ -30,7 +31,7 @@ class AnimalController extends Controller
     public function store(AnimalRequest $request)
     {
         $animal = Animal::Create($request->all());
-        return Response($animal, 201);
+        return Response($animal, HttpResponses::HTTP_CREATED);
     }
 
     /**
@@ -43,12 +44,12 @@ class AnimalController extends Controller
     {
         $animal = Animal::find($id);
         if ($animal) {
-            return Response($animal, 200);
+            return Response($animal, HttpResponses::HTTP_OK);
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
     }
 
@@ -64,13 +65,13 @@ class AnimalController extends Controller
         if (Animal::whereId($id)->update($request->all())) {
             return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
-                200
+                HttpResponses::HTTP_OK
             );
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
     }
 
@@ -85,13 +86,13 @@ class AnimalController extends Controller
         if (Animal::destroy($id)) {
             return Response(
                 ['status' => 'Recurso excluído com sucesso.'],
-                200
+                HttpResponses::HTTP_OK
             );
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            404
+            HttpResponses::HTTP_NOT_FOUND
         );
 
     }
