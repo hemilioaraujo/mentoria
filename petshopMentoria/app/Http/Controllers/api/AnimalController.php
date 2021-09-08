@@ -29,7 +29,8 @@ class AnimalController extends Controller
      */
     public function store(AnimalRequest $request)
     {
-        return Animal::Create($request->all());
+        $animal = Animal::Create($request->all());
+        return Response($animal, 201);
     }
 
     /**
@@ -40,7 +41,15 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
-        return Animal::find($id);
+        $animal = Animal::find($id);
+        if ($animal) {
+            return Response($animal, 200);
+        }
+
+        return Response(
+            ['status' => 'Recurso não encontrado.'],
+            404
+        );
     }
 
     /**
@@ -50,9 +59,19 @@ class AnimalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Animal $request, $id)
+    public function update(AnimalRequest $request, $id)
     {
-        return Animal::whereId($id)->update($request->all());
+        if (Animal::whereId($id)->update($request->all())) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                200
+            );
+        }
+
+        return Response(
+            ['status' => 'Recurso não encontrado.'],
+            404
+        );
     }
 
     /**
@@ -63,6 +82,17 @@ class AnimalController extends Controller
      */
     public function destroy($id)
     {
-        Animal::destroy($id);
+        if (Animal::destroy($id)) {
+            return Response(
+                ['status' => 'Recurso excluído com sucesso.'],
+                200
+            );
+        }
+
+        return Response(
+            ['status' => 'Recurso não encontrado.'],
+            404
+        );
+
     }
 }
