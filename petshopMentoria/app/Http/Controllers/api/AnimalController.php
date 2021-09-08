@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Animal\AnimalRequest;
 use App\Models\Animal;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AnimalController extends Controller
 {
@@ -16,16 +18,7 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        return Animal::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
+        return Response(Animal::all(), 200);
     }
 
     /**
@@ -34,9 +27,9 @@ class AnimalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnimalRequest $request)
     {
-        Animal::Create($request->all());
+        return Animal::Create($request->all());
     }
 
     /**
@@ -57,7 +50,7 @@ class AnimalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Animal $request, $id)
     {
         return Animal::whereId($id)->update($request->all());
     }
