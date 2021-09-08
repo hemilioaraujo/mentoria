@@ -17,7 +17,8 @@ class TutorController extends Controller
      */
     public function index()
     {
-        return Tutor::all();
+        // return ResJ::json(Tutor::all(), 200);
+        return Response(Tutor::all(), 200);
     }
 
     /**
@@ -29,18 +30,7 @@ class TutorController extends Controller
     public function store(TutorRequest $request)
     {
         $tutor = Tutor::create($request->all());
-        
-        if ($tutor) {
-            return response()->json(
-                $tutor,
-                201
-            );
-        }
-
-        return response()->json(
-            $tutor,
-            200
-        );
+        return Response($tutor, 201);
     }
 
     /**
@@ -53,13 +43,10 @@ class TutorController extends Controller
     {
         $tutor = Tutor::find($id);
         if ($tutor) {
-            return response()->json(
-                $tutor,
-                200
-            );
+            return Response($tutor, 200);
         }
 
-        return response()->json(
+        return Response(
             ['status' => 'Recurso não encontrado.'],
             404
         );
@@ -75,13 +62,13 @@ class TutorController extends Controller
     public function update(TutorRequest $request, $id)
     {
         if (Tutor::whereId($id)->update($request->all())) {
-            return response()->json(
+            return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
                 200
             );
         }
 
-        return response()->json(
+        return Response(
             ['status' => 'Recurso não encontrado.'],
             404
         );
@@ -96,13 +83,13 @@ class TutorController extends Controller
     public function destroy($id)
     {
         if (Tutor::destroy($id)) {
-            return response()->json(
+            return Response(
                 ['status' => 'Recurso excluído com sucesso.'],
                 200
             );
         }
 
-        return response()->json(
+        return Response(
             ['status' => 'Recurso não encontrado.'],
             404
         );
