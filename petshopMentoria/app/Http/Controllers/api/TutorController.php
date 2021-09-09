@@ -18,7 +18,6 @@ class TutorController extends Controller
      */
     public function index()
     {
-        // return ResJ::json(Tutor::all(), HttpResponses::HTTP_OK);
         return Response(Tutor::all(), HttpResponses::HTTP_OK);
     }
 
@@ -28,8 +27,9 @@ class TutorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TutorRequest $request)
+    public function store(Request $request)
     {
+        $request->validate(Tutor::rules(), Tutor::messages());
         $tutor = Tutor::create($request->all());
         return Response($tutor, HttpResponses::HTTP_CREATED);
     }
@@ -60,13 +60,23 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TutorRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        if (Tutor::whereId($id)->update($request->all())) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                HttpResponses::HTTP_OK
-            );
+        if ($request->method() === 'PATCH') {
+            if (Tutor::whereId($id)->update($request->all())) {
+                return Response(
+                    ['status' => 'Recurso atualizado com sucesso.'],
+                    HttpResponses::HTTP_OK
+                );
+            }
+        } elseif ($request->method() === 'PUT') {
+            $request->validate(Tutor::rules(), Tutor::messages());
+            if (Tutor::whereId($id)->update($request->all())) {
+                return Response(
+                    ['status' => 'Recurso atualizado com sucesso.'],
+                    HttpResponses::HTTP_OK
+                );
+            }
         }
 
         return Response(

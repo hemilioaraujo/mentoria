@@ -30,6 +30,7 @@ class AnimalController extends Controller
      */
     public function store(AnimalRequest $request)
     {
+        $request->validate(Animal::rules(), Animal::messages());
         $animal = Animal::Create($request->all());
         return Response($animal, HttpResponses::HTTP_CREATED);
     }
@@ -60,13 +61,23 @@ class AnimalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AnimalRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        if (Animal::whereId($id)->update($request->all())) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                HttpResponses::HTTP_OK
-            );
+        if ($request->method() === 'PATCH') {
+            if (Animal::whereId($id)->update($request->all())) {
+                return Response(
+                    ['status' => 'Recurso atualizado com sucesso.'],
+                    HttpResponses::HTTP_OK
+                );
+            }
+        } elseif ($request->method() === 'PUT') {
+            $request->validate(Animal::rules(), Animal::messages());
+            if (Animal::whereId($id)->update($request->all())) {
+                return Response(
+                    ['status' => 'Recurso atualizado com sucesso.'],
+                    HttpResponses::HTTP_OK
+                );
+            }
         }
 
         return Response(
@@ -94,6 +105,5 @@ class AnimalController extends Controller
             ['status' => 'Recurso não encontrado.'],
             HttpResponses::HTTP_NOT_FOUND
         );
-
     }
 }
