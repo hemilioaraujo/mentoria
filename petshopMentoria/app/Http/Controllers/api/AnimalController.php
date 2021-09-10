@@ -6,6 +6,7 @@ use App\Classes\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Animal\AnimalRequest;
 use App\Models\Animal;
+use App\Models\Tutor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -19,7 +20,11 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        return Response(Animal::all(), HttpResponses::HTTP_OK);
+        $animais = Animal::all();
+        foreach ($animais as $animal) {
+            $animal['tutor'] = $animal->tutor;
+        }
+        return Response($animais, HttpResponses::HTTP_OK);
     }
 
     /**
@@ -43,7 +48,7 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
-        $animal = Animal::find($id);
+        $animal = Animal::with('tutor')->find($id);
         if ($animal) {
             return Response($animal, HttpResponses::HTTP_OK);
         }
