@@ -4,7 +4,6 @@ namespace App\Classes;
 
 class HttpResponses
 {
-
     public const HTTP_CONTINUE = 100;
     public const HTTP_SWITCHING_PROTOCOLS = 101;
     public const HTTP_PROCESSING = 102;            // RFC2518
