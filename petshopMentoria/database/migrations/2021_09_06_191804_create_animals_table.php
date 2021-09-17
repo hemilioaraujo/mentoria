@@ -13,7 +13,7 @@ class CreateAnimalsTable extends Migration
      */
     public function up()
     {
-        // identificador único, nome, idade, se é gato ou cachorro e sua respectiva raça; 
+        // identificador único, nome, idade, se é gato ou cachorro e sua respectiva raça;
         // Além do nome e telefone para contato de seu dono.
         Schema::create('animais', function (Blueprint $table) {
             $table->id();

@@ -21,6 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('/animais', AnimalController::class);
 Route::apiResource('/tutores', TutorController::class);
-Route::fallback(function(){
+Route::fallback(function () {
     return Response(['message'=>'Endpoint não encontrado.'], HttpResponses::HTTP_NOT_FOUND);
 });

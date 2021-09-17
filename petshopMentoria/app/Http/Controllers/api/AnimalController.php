@@ -48,15 +48,15 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
-        $animal = Animal::with('tutor')->find($id);
+        $animal = Animal::with('tutor')->findOrFail($id);
+        // try {
+        // } catch (\Throwable $th) {
+        //     // dd($th);
+        //     return Response($th->getMessage(), HttpResponses::HTTP_OK);
+        // }
         if ($animal) {
             return Response($animal, HttpResponses::HTTP_OK);
         }
-
-        return Response(
-            ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
-        );
     }
 
     /**
