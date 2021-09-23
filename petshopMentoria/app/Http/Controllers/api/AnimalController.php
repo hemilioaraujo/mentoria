@@ -1,12 +1,18 @@
 <?php
 
+/**
+ * [TODO:]
+ * Criar requests para cada verbo HTTP
+ * Estudar services e repositores
+ */
+
 namespace App\Http\Controllers\api;
 
-use App\Classes\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Animal\AnimalRequest;
 use App\Models\Animal;
 use App\Models\Tutor;
+use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -24,7 +30,7 @@ class AnimalController extends Controller
         foreach ($animais as $animal) {
             $animal['tutor'] = $animal->tutor;
         }
-        return Response($animais, HttpResponses::HTTP_OK);
+        return Response($animais, StatusCodeInterface::STATUS_OK);
     }
 
     /**
@@ -37,7 +43,7 @@ class AnimalController extends Controller
     {
         $request->validate(Animal::rules(), Animal::messages());
         $animal = Animal::Create($request->all());
-        return Response($animal, HttpResponses::HTTP_CREATED);
+        return Response($animal, StatusCodeInterface::STATUS_CREATED);
     }
 
     /**
@@ -52,10 +58,10 @@ class AnimalController extends Controller
         // try {
         // } catch (\Throwable $th) {
         //     // dd($th);
-        //     return Response($th->getMessage(), HttpResponses::HTTP_OK);
+        //     return Response($th->getMessage(), StatusCodeInterface::HTTP_OK);
         // }
         if ($animal) {
-            return Response($animal, HttpResponses::HTTP_OK);
+            return Response($animal, StatusCodeInterface::STATUS_OK);
         }
     }
 
@@ -72,7 +78,7 @@ class AnimalController extends Controller
             if (Animal::whereId($id)->update($request->all())) {
                 return Response(
                     ['status' => 'Recurso atualizado com sucesso.'],
-                    HttpResponses::HTTP_OK
+                    StatusCodeInterface::STATUS_OK
                 );
             }
         } elseif ($request->method() === 'PUT') {
@@ -80,14 +86,14 @@ class AnimalController extends Controller
             if (Animal::whereId($id)->update($request->all())) {
                 return Response(
                     ['status' => 'Recurso atualizado com sucesso.'],
-                    HttpResponses::HTTP_OK
+                    StatusCodeInterface::STATUS_OK
                 );
             }
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
+            StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
 
@@ -102,13 +108,17 @@ class AnimalController extends Controller
         if (Animal::destroy($id)) {
             return Response(
                 ['status' => 'Recurso excluído com sucesso.'],
-                HttpResponses::HTTP_OK
+                StatusCodeInterface::STATUS_OK
             );
         }
 
+        /**
+         * Sempre retorna vazio no response de destroy
+         * e NO_CONTENT no status
+         */
         return Response(
-            ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
+            [],
+            StatusCodeInterface::STATUS_NO_CONTENT
         );
     }
 }

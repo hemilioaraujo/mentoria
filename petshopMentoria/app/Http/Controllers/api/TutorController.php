@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Classes\HttpResponses;
+use Fig\Http\Message\StatusCodeInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tutor\TutorRequest;
 use App\Models\Tutor;
@@ -18,7 +18,7 @@ class TutorController extends Controller
      */
     public function index()
     {
-        return Response(Tutor::all(), HttpResponses::HTTP_OK);
+        return Response(Tutor::all(), StatusCodeInterface::STATUS_OK);
     }
 
     /**
@@ -31,7 +31,7 @@ class TutorController extends Controller
     {
         $request->validate(Tutor::rules(), Tutor::messages());
         $tutor = Tutor::create($request->all());
-        return Response($tutor, HttpResponses::HTTP_CREATED);
+        return Response($tutor, StatusCodeInterface::STATUS_CREATED);
     }
 
     /**
@@ -44,12 +44,12 @@ class TutorController extends Controller
     {
         $tutor = Tutor::find($id);
         if ($tutor) {
-            return Response($tutor, HttpResponses::HTTP_OK);
+            return Response($tutor, StatusCodeInterface::STATUS_OK);
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
+            StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
 
@@ -66,7 +66,7 @@ class TutorController extends Controller
             if (Tutor::whereId($id)->update($request->all())) {
                 return Response(
                     ['status' => 'Recurso atualizado com sucesso.'],
-                    HttpResponses::HTTP_OK
+                    StatusCodeInterface::STATUS_OK
                 );
             }
         } elseif ($request->method() === 'PUT') {
@@ -74,14 +74,14 @@ class TutorController extends Controller
             if (Tutor::whereId($id)->update($request->all())) {
                 return Response(
                     ['status' => 'Recurso atualizado com sucesso.'],
-                    HttpResponses::HTTP_OK
+                    StatusCodeInterface::STATUS_OK
                 );
             }
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
+            StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
 
@@ -96,13 +96,13 @@ class TutorController extends Controller
         if (Tutor::destroy($id)) {
             return Response(
                 ['status' => 'Recurso excluído com sucesso.'],
-                HttpResponses::HTTP_OK
+                StatusCodeInterface::STATUS_OK
             );
         }
 
         return Response(
             ['status' => 'Recurso não encontrado.'],
-            HttpResponses::HTTP_NOT_FOUND
+            StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
 }
