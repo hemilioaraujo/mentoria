@@ -20,7 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('/animais', AnimalController::class);
+Route::get('/animais', [AnimalController::class, 'index']);
+Route::get('/animais/{id}', [AnimalController::class, 'show']);
+Route::post('/animais', [AnimalController::class, 'post']);
+Route::put('/animais/{id}', [AnimalController::class, 'put']);
+Route::patch('/animais/{id}', [AnimalController::class, 'patch']);
+Route::delete('/animais/{id}', [AnimalController::class, 'delete']);
 
 /**
  * [TODO:] 

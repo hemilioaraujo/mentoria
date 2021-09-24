@@ -39,7 +39,7 @@ class AnimalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AnimalRequest $request)
+    public function post(AnimalRequest $request)
     {
         $request->validate(Animal::rules(), Animal::messages());
         $animal = Animal::Create($request->all());
@@ -72,23 +72,29 @@ class AnimalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function patch(Request $request, $id)
     {
-        if ($request->method() === 'PATCH') {
-            if (Animal::whereId($id)->update($request->all())) {
-                return Response(
-                    ['status' => 'Recurso atualizado com sucesso.'],
-                    StatusCodeInterface::STATUS_OK
-                );
-            }
-        } elseif ($request->method() === 'PUT') {
-            $request->validate(Animal::rules(), Animal::messages());
-            if (Animal::whereId($id)->update($request->all())) {
-                return Response(
-                    ['status' => 'Recurso atualizado com sucesso.'],
-                    StatusCodeInterface::STATUS_OK
-                );
-            }
+        if (Animal::whereId($id)->update($request->all())) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                StatusCodeInterface::STATUS_OK
+            );
+        }
+
+        return Response(
+            ['status' => 'Recurso não encontrado.'],
+            StatusCodeInterface::STATUS_NOT_FOUND
+        );
+    }
+
+    public function put(Request $request, $id)
+    {
+        $request->validate(Animal::rules(), Animal::messages());
+        if (Animal::whereId($id)->update($request->all())) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                StatusCodeInterface::STATUS_OK
+            );
         }
 
         return Response(
@@ -103,11 +109,11 @@ class AnimalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         if (Animal::destroy($id)) {
             return Response(
-                ['status' => 'Recurso excluído com sucesso.'],
+                [],
                 StatusCodeInterface::STATUS_OK
             );
         }
