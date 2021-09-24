@@ -27,7 +27,7 @@ class TutorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function post(Request $request)
     {
         $request->validate(Tutor::rules(), Tutor::messages());
         $tutor = Tutor::create($request->all());
@@ -48,7 +48,7 @@ class TutorController extends Controller
         }
 
         return Response(
-            ['status' => 'Recurso não encontrado.'],
+            [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
@@ -60,27 +60,33 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function patch(Request $request, $id)
     {
-        if ($request->method() === 'PATCH') {
-            if (Tutor::whereId($id)->update($request->all())) {
-                return Response(
-                    ['status' => 'Recurso atualizado com sucesso.'],
-                    StatusCodeInterface::STATUS_OK
-                );
-            }
-        } elseif ($request->method() === 'PUT') {
-            $request->validate(Tutor::rules(), Tutor::messages());
-            if (Tutor::whereId($id)->update($request->all())) {
-                return Response(
-                    ['status' => 'Recurso atualizado com sucesso.'],
-                    StatusCodeInterface::STATUS_OK
-                );
-            }
+        if (Tutor::whereId($id)->update($request->all())) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                StatusCodeInterface::STATUS_OK
+            );
         }
 
         return Response(
-            ['status' => 'Recurso não encontrado.'],
+            [],
+            StatusCodeInterface::STATUS_NOT_FOUND
+        );
+    }
+
+    public function put(Request $request, int $id)
+    {
+        $request->validate(Tutor::rules(), Tutor::messages());
+        if (Tutor::whereId($id)->update($request->all())) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                StatusCodeInterface::STATUS_OK
+            );
+        }
+
+        return Response(
+            [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
     }
@@ -91,7 +97,7 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         if (Tutor::destroy($id)) {
             return Response(

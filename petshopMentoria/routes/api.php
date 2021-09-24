@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AnimalController;
 use App\Http\Controllers\api\TutorController;
 use App\Models\Animal;
+use App\Models\Tutor;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,7 +27,7 @@ Route::apiResource('/animais', AnimalController::class);
  * Fazer rotas específicas de cada método
  */
 
- // http://127.0.0.1:8081/api/animal/
+// http://127.0.0.1:8081/api/animal/
 
 // {
 // 	"nome":"Totó",
@@ -36,8 +37,14 @@ Route::apiResource('/animais', AnimalController::class);
 // 	"tutor_id":4
 // }
 
-Route::apiResource('/tutores', TutorController::class);
+Route::get('/tutores', [TutorController::class, 'index']);
+Route::get('/tutores/{id}', [TutorController::class, 'show']);
+Route::post('/tutores', [TutorController::class, 'post']);
+Route::put('/tutores/{id}', [TutorController::class, 'put']);
+Route::patch('/tutores/{id}', [TutorController::class, 'patch']);
+Route::delete('/tutores/{id}', [TutorController::class, 'delete']);
+
 
 Route::fallback(function () {
-    return Response(['message'=>'Endpoint não encontrado.'], StatusCodeInterface::STATUS_NOT_FOUND);
+    return Response(['message' => 'Endpoint não encontrado.'], StatusCodeInterface::STATUS_NOT_FOUND);
 });
