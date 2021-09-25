@@ -1,5 +1,27 @@
 <?php
 
+/**
+ * Classe TutorController
+ *
+ * Classe que faz o controle dos recursos de tutores
+ *
+ * PHP version 8.0.10
+ *
+ * LICENSE: MIT
+ *
+ * @category   CategoryName
+ * @package    PackageName
+ * @author     Original Author <author@example.com>
+ * @author     Another Author <another@example.com>
+ * @copyright  1997-2005 The PHP Group
+ * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @version    SVN: $Id$
+ * @link       http://pear.php.net/package/PackageName
+ * @see        NetOther, Net_Sample::Net_Sample()
+ * @since      File available since Release 1.2.0
+ * @deprecated File deprecated in Release 2.0.0
+ */
+
 namespace App\Http\Controllers\api;
 
 use Fig\Http\Message\StatusCodeInterface;
@@ -9,24 +31,22 @@ use App\Models\Tutor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+/**
+ * Undocumented class
+ *
+ * @category Controller
+ * @package  Controllers
+ * @author   Hemílio <hemilioaraujo@gmail.com>
+ * @license  MIT <www.wwwww.com>
+ * @link     <www.wwwww.com>
+ */
 class TutorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Response(Tutor::all(), StatusCodeInterface::STATUS_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function post(Request $request)
     {
         $request->validate(Tutor::rules(), Tutor::messages());
@@ -34,12 +54,6 @@ class TutorController extends Controller
         return Response($tutor, StatusCodeInterface::STATUS_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $tutor = Tutor::find($id);
@@ -53,13 +67,6 @@ class TutorController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function patch(Request $request, $id)
     {
         if (Tutor::whereId($id)->update($request->all())) {
@@ -94,7 +101,8 @@ class TutorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function delete($id)

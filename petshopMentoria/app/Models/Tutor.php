@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tutor extends Model
 {
     use HasFactory;
+
     protected $table = 'tutores';
     protected $fillable = ['nome', 'telefone','cpf'];
 
@@ -16,7 +17,7 @@ class Tutor extends Model
         return [
             'nome' => ['required', 'max:30'],
             'telefone' => ['required', 'max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i'],
-            'cpf'=>['required','unique:tutores']
+            'cpf' => ['required','unique:tutores']
         ];
     }
 
@@ -26,7 +27,7 @@ class Tutor extends Model
             'required' => 'O campo de :attribute é obrigatório.',
             'max' => 'O campo de :attribute não pode ser maior que :max.',
             'regex' => 'O :attribute é invalido. (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.',
-            'unique'=> 'O :attribute informado já está cadastrado.'
+            'unique' => 'O :attribute informado já está cadastrado.'
         ];
     }
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Animal extends Model
 {
     use HasFactory;
+
     protected $table = 'animais';
     protected $fillable = ['nome', 'idade', 'tipo', 'raca', 'tutor_id'];
     // identificador único, nome, idade, se é gato ou cachorro e sua respectiva raça;
@@ -32,7 +33,7 @@ class Animal extends Model
             'integer' => 'O campo de :attribute deve ser do tipo inteiro.',
             'max' => 'O campo de :attribute não pode ser maior que :max.',
             'in' => 'O campo de :attribute deve ser um dos tipos: :values',
-            'exists'=> 'O id de tutor não existe.'
+            'exists' => 'O id de tutor não existe.'
         ];
     }
 

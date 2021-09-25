@@ -39,21 +39,29 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-        });
+        $this->reportable(
+            function (Throwable $e) {
+            }
+        );
     }
 
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
-            return response()->json([
+            return response()->json(
+                [
                 'error' => 'Recurso de ' . 'App\\' . $exception->getModel() . ' não foi encontrado.'
-            ], HttpResponses::HTTP_NOT_FOUND);
+                ],
+                HttpResponses::HTTP_NOT_FOUND
+            );
         }
         if ($exception instanceof QueryException) {
-            return Response([
+            return Response(
+                [
                 'error' => 'Serviço temporariamente indisponivel.'
-            ], HttpResponses::HTTP_SERVICE_UNAVAILABLE);
+                ],
+                HttpResponses::HTTP_SERVICE_UNAVAILABLE
+            );
         }
 
         return parent::render($request, $exception);

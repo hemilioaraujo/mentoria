@@ -17,7 +17,7 @@ class TesteController extends Controller
 
         $animais = Animal::all();
         foreach ($animais as $animal) {
-            $animal['tutor']=$animal->tutor;
+            $animal['tutor'] = $animal->tutor;
         }
 
 

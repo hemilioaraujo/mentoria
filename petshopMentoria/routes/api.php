@@ -28,18 +28,18 @@ Route::patch('/animais/{id}', [AnimalController::class, 'patch']);
 Route::delete('/animais/{id}', [AnimalController::class, 'delete']);
 
 /**
- * [TODO:] 
+ * [TODO:]
  * Fazer rotas específicas de cada método
  */
 
 // http://127.0.0.1:8081/api/animal/
 
 // {
-// 	"nome":"Totó",
-// 	"tipo":"cachorro",
-// 	"raca":"fox",
-// 	"idade":2,
-// 	"tutor_id":4
+//  "nome":"Totó",
+//  "tipo":"cachorro",
+//  "raca":"fox",
+//  "idade":2,
+//  "tutor_id":4
 // }
 
 Route::get('/tutores', [TutorController::class, 'index']);

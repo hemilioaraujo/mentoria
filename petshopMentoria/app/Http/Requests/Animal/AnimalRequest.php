@@ -38,7 +38,7 @@ class AnimalRequest extends FormRequest
             'required' => 'O campo de :attribute é obrigatório.',
             'integer' => 'O campo de :attribute deve ser do tipo inteiro.',
             'max' => 'O campo de :attribute não pode ser maior que :max.',
-            'in'=> 'O campo de :attribute deve ser um dos tipos: :values'
+            'in' => 'O campo de :attribute deve ser um dos tipos: :values'
         ];
     }
 

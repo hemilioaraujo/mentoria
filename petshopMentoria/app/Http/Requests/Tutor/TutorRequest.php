@@ -34,7 +34,7 @@ class TutorRequest extends FormRequest
         return [
             'required' => 'O campo de :attribute é obrigatório.',
             'max' => 'O campo de :attribute não pode ser maior que :max.',
-            'regex'=> 'O :attribute é invalido. (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.'
+            'regex' => 'O :attribute é invalido. (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.'
         ];
     }
 }
