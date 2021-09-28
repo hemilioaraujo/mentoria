@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Animal\AnimalRequest;
 use App\Models\Animal;
 use App\Models\Tutor;
+use App\Repositories\Contracts\AnimalRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,9 +25,9 @@ class AnimalController extends Controller
      * @return \Illuminate\Http\Response
      * Método GET
      */
-    public function index()
+    public function index(AnimalRepositoryInterface $model)
     {
-        $animais = Animal::all();
+        $animais = $model->all();
         foreach ($animais as $animal) {
             $animal['tutor'] = $animal->tutor;
         }
@@ -42,7 +43,8 @@ class AnimalController extends Controller
     public function post(AnimalRequest $request)
     {
         $request->validate(Animal::rules(), Animal::messages());
-        $animal = Animal::Create($request->all());
+        $animal = Animal::create($request->all());
+        // $animal = Animal::create($request->all());
         return Response($animal, StatusCodeInterface::STATUS_CREATED);
     }
 
