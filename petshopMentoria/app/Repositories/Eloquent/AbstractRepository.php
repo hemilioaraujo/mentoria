@@ -37,7 +37,7 @@ abstract class AbstractRepository
     {
         return $this->model->destroy($id);
     }
-    
+
     public function create(array $data)
     {
         return $this->model->create($data);

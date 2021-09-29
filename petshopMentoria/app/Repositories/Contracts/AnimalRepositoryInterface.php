@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use Illuminate\Http\Request;
+
 interface AnimalRepositoryInterface
 {
     public function all();
