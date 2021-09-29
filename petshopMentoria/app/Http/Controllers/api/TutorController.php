@@ -14,82 +14,57 @@ class TutorController extends Controller
 {
     public function index(TutorRepositoryInterface $model)
     {
-        return Response(
-            $model->all(),
-            StatusCodeInterface::STATUS_OK
-        );
+        return Response($model->all(), StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(Request $request)
+    public function post(TutorRepositoryInterface $model, Request $request)
     {
         $request->validate(Tutor::rules(), Tutor::messages());
-        $tutor = Tutor::create($request->all());
+        $tutor = $model->create($request->all());
         return Response($tutor, StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show($id)
+    public function show(TutorRepositoryInterface $model, int $id)
     {
-        $tutor = Tutor::find($id);
+        $tutor = $model->find($id);
         if ($tutor) {
             return Response($tutor, StatusCodeInterface::STATUS_OK);
         }
 
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(Request $request, $id)
+    public function patch(TutorRepositoryInterface $model, Request $request, int $id)
     {
-        if (Tutor::whereId($id)->update($request->all())) {
+        if ($model->update($request->all(), $id)) {
             return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
                 StatusCodeInterface::STATUS_OK
             );
         }
 
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(Request $request, int $id)
+    public function put(TutorRepositoryInterface $model, Request $request, int $id)
     {
         $request->validate(Tutor::rules(), Tutor::messages());
-        if (Tutor::whereId($id)->update($request->all())) {
+        if ($model->update($request->all(), $id)) {
             return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
                 StatusCodeInterface::STATUS_OK
             );
         }
 
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
+    public function delete(TutorRepositoryInterface $model, int $id)
     {
-        if (Tutor::destroy($id)) {
-            return Response(
-                ['status' => 'Recurso excluído com sucesso.'],
-                StatusCodeInterface::STATUS_OK
-            );
+        if ($model->delete($id)) {
+            return Response([], StatusCodeInterface::STATUS_OK);
         }
 
-        return Response(
-            ['status' => 'Recurso não encontrado.'],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }
