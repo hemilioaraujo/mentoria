@@ -2,3 +2,4 @@
 .php-cs-fixer.cache
 petshopMentoria/.env.example
 .vscode/launch.json
+.vscode/settings.json
