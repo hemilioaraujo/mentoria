@@ -4,6 +4,9 @@ namespace App\Http\Controllers\api;
 
 use Fig\Http\Message\StatusCodeInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tutor\TutorPatchRequest;
+use App\Http\Requests\Tutor\TutorPostRequest;
+use App\Http\Requests\Tutor\TutorPutRequest;
 use App\Http\Requests\Tutor\TutorRequest;
 use App\Models\Tutor;
 use App\Repositories\Contracts\TutorRepositoryInterface;
@@ -17,7 +20,7 @@ class TutorController extends Controller
         return Response($model->all(), StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(TutorRepositoryInterface $model, Request $request)
+    public function post(TutorRepositoryInterface $model, TutorPostRequest $request)
     {
         $request->validate(Tutor::rules(), Tutor::messages());
         $tutor = $model->create($request->all());
@@ -34,7 +37,7 @@ class TutorController extends Controller
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(TutorRepositoryInterface $model, Request $request, int $id)
+    public function patch(TutorRepositoryInterface $model, TutorPatchRequest $request, int $id)
     {
         if ($model->update($request->all(), $id)) {
             return Response(
@@ -46,9 +49,8 @@ class TutorController extends Controller
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(TutorRepositoryInterface $model, Request $request, int $id)
+    public function put(TutorRepositoryInterface $model, TutorPutRequest $request, int $id)
     {
-        $request->validate(Tutor::rules(), Tutor::messages());
         if ($model->update($request->all(), $id)) {
             return Response(
                 ['status' => 'Recurso atualizado com sucesso.'],
