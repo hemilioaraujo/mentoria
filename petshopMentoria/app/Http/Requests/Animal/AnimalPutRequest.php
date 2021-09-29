@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Tutor;
+namespace App\Http\Requests\Animal;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TutorRequest extends FormRequest
+class AnimalPutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class TutorRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'max:30'],
-            'telefone' => ['required', 'max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i']
+            'nome' => ['required', 'max:25'],
+            'idade' => ['required', 'integer'],
+            'tipo' => ['required', 'in:gato,cachorro'],
+            'raca' => ['required', 'max:15'],
         ];
     }
 
@@ -33,8 +35,16 @@ class TutorRequest extends FormRequest
     {
         return [
             'required' => 'O campo de :attribute é obrigatório.',
+            'integer' => 'O campo de :attribute deve ser do tipo inteiro.',
             'max' => 'O campo de :attribute não pode ser maior que :max.',
-            'regex' => 'O :attribute é invalido. (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.'
+            'in' => 'O campo de :attribute deve ser um dos tipos: :values'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'raca' => 'raça',
         ];
     }
 }
