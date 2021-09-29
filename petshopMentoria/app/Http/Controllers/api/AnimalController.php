@@ -1,15 +1,11 @@
 <?php
 
-/**
- * [TODO:]
- * Estudar services e repositores
- * 
- */
-
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Animal\AnimalRequest;
+use App\Http\Requests\Animal\AnimalPostRequest;
+use App\Http\Requests\Animal\AnimalPatchRequest;
+use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Models\Animal;
 use App\Models\Tutor;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
@@ -22,15 +18,11 @@ class AnimalController extends Controller
     public function index(AnimalRepositoryInterface $model)
     {
         $animais = $model->all();
-        foreach ($animais as $animal) {
-            $animal['tutor'] = $animal->tutor;
-        }
         return Response($animais, StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(AnimalRepositoryInterface $model, AnimalRequest $request)
+    public function post(AnimalRepositoryInterface $model, AnimalPostRequest $request)
     {
-        $request->validate(Animal::rules(), Animal::messages());
         $animal = $model->create($request->all());
         return Response($animal, StatusCodeInterface::STATUS_CREATED);
     }
@@ -45,7 +37,7 @@ class AnimalController extends Controller
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(AnimalRepositoryInterface $model, Request $request, int $id)
+    public function patch(AnimalRepositoryInterface $model, AnimalPatchRequest $request, int $id)
     {
         if ($model->update($request->all(), $id)) {
             return Response(
@@ -60,7 +52,7 @@ class AnimalController extends Controller
         );
     }
 
-    public function put(AnimalRepositoryInterface $model, Request $request, int $id)
+    public function put(AnimalRepositoryInterface $model, AnimalPutRequest $request, int $id)
     {
         $request->validate(Animal::rules(), Animal::messages());
         if ($model->update($request->all(), $id)) {
