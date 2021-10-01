@@ -26,7 +26,7 @@ class TutorPostRequest extends FormRequest
         return [
             'nome' => ['required', 'max:30'],
             'telefone' => ['required', 'max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i'],
-            'cpf' => ['required', 'unique:tutores']
+            'cpf' => ['required', 'unique:tutores', 'max:11']
         ];
     }
 

@@ -7,13 +7,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class TutorPatchRequest extends FormRequest
 {
-    protected $model;
+    protected $repository;
     protected $tutor_id;
     protected $tutor;
 
-    public function __construct(TutorRepositoryInterface $model)
+    public function __construct(TutorRepositoryInterface $repository)
     {
-        $this->model = $model;
+        $this->repository = $repository;
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -33,8 +33,12 @@ class TutorPatchRequest extends FormRequest
     public function rules()
     {
         $this->tutor_id = $this->route('id');
-        $this->tutor = $this->model->find($this->tutor_id);
-
+        $this->tutor = $this->repository->find($this->tutor_id);
+        
+        if (is_null($this->tutor)) {
+            return [];
+        }
+        
         if ($this->__isset('cpf')) {
             if ($this->tutor->cpf == $this->__get('cpf')) {
                 return [
@@ -47,7 +51,7 @@ class TutorPatchRequest extends FormRequest
         return [
             'nome' => ['max:30'],
             'telefone' => ['max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i'],
-            'cpf' => ['unique:tutores']
+            'cpf' => ['unique:tutores','max:11']
         ];
     }
 

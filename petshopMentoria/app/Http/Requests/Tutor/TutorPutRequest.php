@@ -39,12 +39,16 @@ class TutorPutRequest extends FormRequest
         $this->tutor_id = $this->route('id');
         $this->tutor = $this->model->find($this->tutor_id);
 
+        if (is_null($this->tutor)) {
+            return [];
+        }
+
         if ($this->__isset('cpf')) {
             if ($this->tutor->cpf == $this->__get('cpf')) {
                 return [
                     'nome' => ['required', 'max:30'],
                     'telefone' => ['required', 'max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i'],
-                    'cpf' => ['required']
+                    'cpf' => ['required', 'max:11']
                 ];
             }
         }
@@ -52,7 +56,7 @@ class TutorPutRequest extends FormRequest
         return [
             'nome' => ['required', 'max:30'],
             'telefone' => ['required', 'max:15', 'regex:/(\(\d{2}\))(\d{4,5}\-\d{4})/i'],
-            'cpf' => ['required', 'unique:tutores']
+            'cpf' => ['required', 'unique:tutores', 'max:11']
         ];
     }
 
