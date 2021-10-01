@@ -9,81 +9,47 @@ use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Models\Animal;
 use App\Models\Tutor;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
+use App\Services\AnimalService;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AnimalController extends Controller
 {
+    private $animalService;
+
+    public function __construct(AnimalService $animalService)
+    {
+        $this->animalService = $animalService;
+    }
+
     public function index(AnimalRepositoryInterface $model)
     {
-        $animais = $model->all();
-        return Response($animais, StatusCodeInterface::STATUS_OK);
+        return $this->animalService->index();
     }
 
-    public function post(AnimalRepositoryInterface $model, AnimalPostRequest $request)
+    public function post(AnimalPostRequest $request)
     {
-        $animal = $model->create($request->all());
-        return Response($animal, StatusCodeInterface::STATUS_CREATED);
+        return $this->animalService->post($request);
     }
 
-    public function show(AnimalRepositoryInterface $model, int $id)
+    public function show(int $id)
     {
-        $animal = $model->find($id);
-
-        if ($animal) {
-            return Response($animal, StatusCodeInterface::STATUS_OK);
-        }
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+        return $this->animalService->show($id);
     }
 
-    public function patch(AnimalRepositoryInterface $model, AnimalPatchRequest $request, int $id)
+    public function patch(AnimalPatchRequest $request, int $id)
     {
-        if ($model->update($request->all(), $id)) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                StatusCodeInterface::STATUS_OK
-            );
-        }
-
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return $this->animalService->patch($request, $id);
     }
 
-    public function put(AnimalRepositoryInterface $model, AnimalPutRequest $request, int $id)
+    public function put(AnimalPutRequest $request, int $id)
     {
-        $request->validate(Animal::rules(), Animal::messages());
-        if ($model->update($request->all(), $id)) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                StatusCodeInterface::STATUS_OK
-            );
-        }
-
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
+        return $this->animalService->put($request, $id);
     }
 
-    public function delete(AnimalRepositoryInterface $model, int $id)
+    public function delete(int $id)
     {
-        if ($model->delete($id)) {
-            return Response(
-                [],
-                StatusCodeInterface::STATUS_OK
-            );
-        }
-
-        /**
-         * Sempre retorna vazio no response de destroy
-         * e NO_CONTENT no status
-         */
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NO_CONTENT
-        );
+        return $this->animalService->delete($id);
     }
 }
