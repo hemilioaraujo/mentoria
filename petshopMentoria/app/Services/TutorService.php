@@ -68,7 +68,7 @@ class TutorService
     public function delete(int $id)
     {
         if ($this->repository->delete($id)) {
-            return Response([], StatusCodeInterface::STATUS_OK);
+            return Response([], StatusCodeInterface::STATUS_NO_CONTENT);
         }
 
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
