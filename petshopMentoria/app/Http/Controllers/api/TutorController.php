@@ -58,8 +58,8 @@ class TutorController extends Controller
         return $this->tutorService->animais($id);
     }
 
-    public function animais_id(int $id_tutor, int $id_animal)
+    public function animaisId(int $id_tutor, int $id_animal)
     {
-        return $this->tutorService->animais_id($id_tutor, $id_animal);
+        return $this->tutorService->animaisId($id_tutor, $id_animal);
     }
 }

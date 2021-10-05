@@ -37,7 +37,7 @@ Route::delete('/animais/{id}', [AnimalController::class, 'delete']);
 Route::get('/tutores', [TutorController::class, 'index']);
 Route::get('/tutores/{id}', [TutorController::class, 'show']);
 Route::get('/tutores/{id}/animais', [TutorController::class, 'animais']);
-Route::get('/tutores/{id}/animais/{id_animal}', [TutorController::class, 'animais_id']);
+Route::get('/tutores/{id}/animais/{id_animal}', [TutorController::class, 'animaisId']);
 Route::post('/tutores', [TutorController::class, 'post']);
 Route::put('/tutores/{id}', [TutorController::class, 'put']);
 Route::patch('/tutores/{id}', [TutorController::class, 'patch']);

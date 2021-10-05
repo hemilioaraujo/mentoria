@@ -14,7 +14,7 @@ class TutorRepository extends AbstractRepository implements TutorRepositoryInter
         return parent::$model->animais();
     }
 
-    public function animais_id(int $id_animal)
+    public function animaisId(int $id_animal)
     {
         return $this->animais()->find($id_animal);
     }

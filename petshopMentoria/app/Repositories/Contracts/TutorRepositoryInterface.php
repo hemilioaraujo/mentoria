@@ -10,5 +10,5 @@ interface TutorRepositoryInterface
     public function delete(int $id);
     public function create(array $data);
     public function animais();
-    public function animais_id(int $id_animal);
+    public function animaisId(int $id_animal);
 }

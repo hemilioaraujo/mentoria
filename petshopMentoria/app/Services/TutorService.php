@@ -9,7 +9,6 @@ use App\Repositories\Contracts\TutorRepositoryInterface;
 use App\Repositories\Eloquent\TutorRepository;
 use Fig\Http\Message\StatusCodeInterface;
 
-
 class TutorService
 {
     private $repository;
@@ -91,7 +90,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function animais_id(int $id_tutor, int $id_animal)
+    public function animaisId(int $id_tutor, int $id_animal)
     {
         $tutor = $this->repository->find($id_tutor);
         if ($tutor) {
