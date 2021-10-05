@@ -15,14 +15,18 @@ class TutorService
     private $repository;
     private $validator;
 
-    public function __construct(TutorRepositoryInterface $repository, )
+    public function __construct(TutorRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
 
     public function index()
     {
-        return Response($this->repository->all(), StatusCodeInterface::STATUS_OK);
+        $tutores = $this->repository->all();
+        foreach ($tutores as $tutor) {
+            $tutor['animais'] = $tutor->animais();
+        }
+        return Response($tutores, StatusCodeInterface::STATUS_OK);
     }
 
     public function post(TutorPostRequest $request)
@@ -69,6 +73,33 @@ class TutorService
     {
         if ($this->repository->delete($id)) {
             return Response([], StatusCodeInterface::STATUS_NO_CONTENT);
+        }
+
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+    }
+
+    public function animais(int $id)
+    {
+        $tutor = $this->repository->find($id);
+        if ($tutor) {
+            $animais = $tutor->animais();
+            if ($animais) {
+                return Response($animais, StatusCodeInterface::STATUS_OK);
+            }
+        }
+
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+    }
+
+    public function animais_id(int $id_tutor, int $id_animal)
+    {
+        $tutor = $this->repository->find($id_tutor);
+        if ($tutor) {
+            $animais = $tutor->animais();
+            $animal = $animais->find($id_animal);
+            if ($animal) {
+                return Response($animal, StatusCodeInterface::STATUS_OK);
+            }
         }
 
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
