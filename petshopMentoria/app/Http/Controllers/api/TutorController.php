@@ -17,8 +17,9 @@ use Illuminate\Http\Response;
 class TutorController extends Controller
 {
     private $tutorService;
-    
-    public function __construct(TutorService $tutorService) {
+
+    public function __construct(TutorService $tutorService)
+    {
         $this->tutorService = $tutorService;
     }
 
@@ -50,5 +51,15 @@ class TutorController extends Controller
     public function delete(int $id)
     {
         return $this->tutorService->delete($id);
+    }
+
+    public function animais(int $id)
+    {
+        return $this->tutorService->animais($id);
+    }
+
+    public function animaisId(int $id_tutor, int $id_animal)
+    {
+        return $this->tutorService->animaisId($id_tutor, $id_animal);
     }
 }

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/animais', [AnimalController::class, 'index']);
 Route::get('/animais/{id}', [AnimalController::class, 'show']);
+Route::get('/animais/{id}/tutores', [AnimalController::class, 'tutores']);
 Route::post('/animais', [AnimalController::class, 'post']);
 Route::put('/animais/{id}', [AnimalController::class, 'put']);
 Route::patch('/animais/{id}', [AnimalController::class, 'patch']);
@@ -35,6 +36,8 @@ Route::delete('/animais/{id}', [AnimalController::class, 'delete']);
  */
 Route::get('/tutores', [TutorController::class, 'index']);
 Route::get('/tutores/{id}', [TutorController::class, 'show']);
+Route::get('/tutores/{id}/animais', [TutorController::class, 'animais']);
+Route::get('/tutores/{id}/animais/{id_animal}', [TutorController::class, 'animaisId']);
 Route::post('/tutores', [TutorController::class, 'post']);
 Route::put('/tutores/{id}', [TutorController::class, 'put']);
 Route::patch('/tutores/{id}', [TutorController::class, 'patch']);

@@ -34,11 +34,11 @@ class TutorPatchRequest extends FormRequest
     {
         $this->tutor_id = $this->route('id');
         $this->tutor = $this->repository->find($this->tutor_id);
-        
+
         if (is_null($this->tutor)) {
             return [];
         }
-        
+
         if ($this->__isset('cpf')) {
             if ($this->tutor->cpf == $this->__get('cpf')) {
                 return [

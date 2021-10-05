@@ -52,4 +52,9 @@ class AnimalController extends Controller
     {
         return $this->animalService->delete($id);
     }
+
+    public function tutores(int $id)
+    {
+        return $this->animalService->tutor($id);
+    }
 }

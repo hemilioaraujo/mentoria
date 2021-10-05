@@ -78,13 +78,21 @@ class AnimalService
             );
         }
 
-        /**
-         * Sempre retorna vazio no response de destroy
-         * e NO_CONTENT no status
-         */
         return Response(
             [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
+    }
+
+    public function tutor(int $id)
+    {
+        $animal = $this->repository->find($id);
+        if ($animal) {
+            $tutor = $animal->tutor();
+            if ($tutor) {
+                return Response($tutor, StatusCodeInterface::STATUS_OK);
+            }
+        }
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }
