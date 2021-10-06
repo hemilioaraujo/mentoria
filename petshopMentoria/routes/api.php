@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AnimalController;
+use App\Http\Controllers\api\ServicoController;
 use App\Http\Controllers\api\TutorController;
 use App\Models\Animal;
 use App\Models\Tutor;
@@ -42,6 +43,16 @@ Route::post('/tutores', [TutorController::class, 'post']);
 Route::put('/tutores/{id}', [TutorController::class, 'put']);
 Route::patch('/tutores/{id}', [TutorController::class, 'patch']);
 Route::delete('/tutores/{id}', [TutorController::class, 'delete']);
+
+/**
+ * Rotas para Serviços
+ */
+Route::get('/servicos', [ServicoController::class, 'index']);
+Route::get('/servicos/{id}', [ServicoController::class, 'show']);
+Route::post('/servicos', [ServicoController::class, 'post']);
+Route::put('/servicos/{id}', [ServicoController::class, 'put']);
+Route::patch('/servicos/{id}', [ServicoController::class, 'patch']);
+Route::delete('/servicos/{id}', [ServicoController::class, 'delete']);
 
 /**
  * Rota de Fallback

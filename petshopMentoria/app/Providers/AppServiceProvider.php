@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\TutorRepositoryInterface',
             'App\Repositories\Eloquent\TutorRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Contracts\ServicoRepositoryInterface',
+            'App\Repositories\Eloquent\ServicoRepository'
+        );
     }
 
     /**
