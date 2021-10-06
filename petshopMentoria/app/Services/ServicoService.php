@@ -6,7 +6,6 @@ use App\Http\Requests\Servico\ServicoRequest;
 use App\Repositories\Contracts\ServicoRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 
-
 class ServicoService
 {
     private $repository;

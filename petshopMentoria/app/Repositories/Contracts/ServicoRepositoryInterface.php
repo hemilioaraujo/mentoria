@@ -2,7 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
-interface ServicoRepositoryInterface{
+interface ServicoRepositoryInterface
+{
     public function all();
     public function find(int $id);
     public function update(array $data, int $id);

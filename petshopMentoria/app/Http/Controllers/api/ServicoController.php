@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 class ServicoController extends Controller
 {
     private $servicoService;
-    
-    public function __construct(ServicoService $servicoService) {
+
+    public function __construct(ServicoService $servicoService)
+    {
         $this->servicoService = $servicoService;
     }
 
@@ -44,5 +45,4 @@ class ServicoController extends Controller
     {
         return $this->servicoService->delete($id);
     }
-
 }
