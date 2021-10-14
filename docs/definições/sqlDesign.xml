@@ -35,7 +35,7 @@
             <type label="Bit" length="0" sql="bit" quote="" />
         </group>
     </datatypes>
-    <table x="1375" y="225" name="agendamentos">
+    <table x="714" y="174" name="agendamentos">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
@@ -50,10 +50,6 @@
             <default>NULL</default>
             <relation table="funcionarios" row="id" />
         </row>
-        <row name="valor" null="1" autoincrement="0">
-            <datatype>INTEGER</datatype>
-            <default>NULL</default>
-        </row>
         <row name="data_hora" null="1" autoincrement="0">
             <datatype>DATETIME</datatype>
             <default>NULL</default>
@@ -67,7 +63,7 @@
             <part>id</part>
         </key>
     </table>
-    <table x="1144" y="58" name="animais">
+    <table x="501" y="19" name="animais">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
@@ -97,7 +93,7 @@
             <part>id</part>
         </key>
     </table>
-    <table x="1146" y="408" name="servicos">
+    <table x="503" y="369" name="servicos">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
@@ -114,7 +110,7 @@
             <part>id</part>
         </key>
     </table>
-    <table x="1135" y="241" name="funcionarios">
+    <table x="492" y="202" name="funcionarios">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
@@ -135,7 +131,7 @@
             <part>id</part>
         </key>
     </table>
-    <table x="882" y="369" name="funcionarios_servicos">
+    <table x="233" y="313" name="funcionarios_servicos">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
@@ -154,7 +150,7 @@
             <part>id</part>
         </key>
     </table>
-    <table x="970" y="80" name="tutores">
+    <table x="305" y="35" name="tutores">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default>
