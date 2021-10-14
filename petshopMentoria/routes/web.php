@@ -14,4 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [TesteController::class, 'index']);
+Route::get('/', function()
+{
+    echo "show";
+});
