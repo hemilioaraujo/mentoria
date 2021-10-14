@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\Servico\ServicoRequest;
+use App\Http\Requests\Servico\ServicoPatchRequest;
 use App\Repositories\Contracts\ServicoRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 
@@ -37,7 +38,7 @@ class ServicoService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(ServicoRequest $request, int $id)
+    public function patch(ServicoPatchRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(

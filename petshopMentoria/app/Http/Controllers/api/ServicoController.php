@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Servico\ServicoRequest;
+use App\Http\Requests\Servico\ServicoPatchRequest;
 use App\Services\ServicoService;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class ServicoController extends Controller
         return $this->servicoService->show($id);
     }
 
-    public function patch(ServicoRequest $request, int $id)
+    public function patch(ServicoPatchRequest $request, int $id)
     {
         return $this->servicoService->patch($request, $id);
     }
