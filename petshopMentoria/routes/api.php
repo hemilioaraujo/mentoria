@@ -3,9 +3,9 @@
 use App\Http\Controllers\api\AnimalController;
 use App\Http\Controllers\api\FuncionarioController;
 use App\Http\Controllers\api\ServicoController;
+use App\Http\Controllers\api\FuncionarioServicoController;
 use App\Http\Controllers\api\TutorController;
-use App\Models\Animal;
-use App\Models\Tutor;
+use App\Http\Controllers\api\AgendamentoController;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -64,6 +64,26 @@ Route::post('/funcionarios', [FuncionarioController::class, 'post']);
 Route::put('/funcionarios/{id}', [FuncionarioController::class, 'put']);
 Route::patch('/funcionarios/{id}', [FuncionarioController::class, 'patch']);
 Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'delete']);
+
+/**
+ * Rotas para Funcionários-Serviços
+ */
+Route::get('/funcionarios-servicos', [FuncionarioServicoController::class, 'index']);
+Route::get('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'show']);
+Route::post('/funcionarios-servicos', [FuncionarioServicoController::class, 'post']);
+Route::put('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'put']);
+Route::patch('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'patch']);
+Route::delete('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'delete']);
+
+/**
+ * Rotas para Agendamentos
+ */
+Route::get('/agendamentos', [AgendamentoController::class, 'index']);
+Route::get('/agendamentos/{id}', [AgendamentoController::class, 'show']);
+// Route::post('/agendamentos', [AgendamentoController::class, 'post']);
+// Route::put('/agendamentos/{id}', [AgendamentoController::class, 'put']);
+// Route::patch('/agendamentos/{id}', [AgendamentoController::class, 'patch']);
+Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'delete']);
 
 /**
  * Rota de Fallback
