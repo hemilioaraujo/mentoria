@@ -35,7 +35,7 @@ services:
 
   # Nginx
   app-nginx:
-    image: webdevops/php-nginx:8.0
+    image: webdevops/php-nginx-dev:8.0
     container_name: ${APP_NAME}_web
     networks:
       - internal
