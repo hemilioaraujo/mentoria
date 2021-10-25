@@ -10,40 +10,45 @@ use Illuminate\Http\Request;
 
 class FuncionarioController extends Controller
 {
-    private $funcionarioService;
+    private $service;
 
-    public function __construct(FuncionarioService $funcionarioService)
+    public function __construct(FuncionarioService $service)
     {
-        $this->funcionarioService = $funcionarioService;
+        $this->service = $service;
     }
 
     public function index()
     {
-        return $this->funcionarioService->index();
+        return $this->service->index();
     }
 
     public function post(FuncionarioRequest $request)
     {
-        return $this->funcionarioService->post($request);
+        return $this->service->post($request);
     }
 
     public function show(int $id)
     {
-        return $this->funcionarioService->show($id);
+        return $this->service->show($id);
     }
 
     public function patch(FuncionarioPatchRequest $request, int $id)
     {
-        return $this->funcionarioService->patch($request, $id);
+        return $this->service->patch($request, $id);
     }
 
     public function put(FuncionarioRequest $request, int $id)
     {
-        return $this->funcionarioService->put($request, $id);
+        return $this->service->put($request, $id);
     }
 
     public function delete(int $id)
     {
-        return $this->funcionarioService->delete($id);
+        return $this->service->delete($id);
+    }
+
+    public function agendamentos(int $id)
+    {
+        return $this->service->agendamentos($id);
     }
 }
