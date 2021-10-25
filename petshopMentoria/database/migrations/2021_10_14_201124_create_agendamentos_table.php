@@ -19,7 +19,8 @@ class CreateAgendamentosTable extends Migration
             $table->unsignedBigInteger('animal_id');
             $table->unsignedBigInteger('funcionario_id');
             $table->unsignedBigInteger('servico_id');
-            $table->dateTime('data_hora');
+            $table->dateTime('inicio');
+            $table->dateTime('fim');
 
             $table->foreign('animal_id')->references('id')->on('animais');
             $table->foreign('funcionario_id')->references('id')->on('funcionarios');

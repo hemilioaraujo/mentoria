@@ -9,7 +9,7 @@ class Agendamento extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['animal_id', 'funcionario_id', 'data_hora', 'servico_id'];
+    protected $fillable = ['animal_id', 'funcionario_id', 'servico_id', 'inicio', 'fim'];
 
     public function animal()
     {
