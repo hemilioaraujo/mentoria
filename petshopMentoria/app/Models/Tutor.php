@@ -14,6 +14,6 @@ class Tutor extends Model
 
     public function animais()
     {
-        return $this->hasMany(Animal::class)->get();
+        return $this->hasMany(Animal::class);
     }
 }
