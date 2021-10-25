@@ -80,8 +80,8 @@ Route::delete('/funcionarios-servicos/{id}', [FuncionarioServicoController::clas
  */
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::get('/agendamentos/{id}', [AgendamentoController::class, 'show']);
-// Route::post('/agendamentos', [AgendamentoController::class, 'post']);
-// Route::put('/agendamentos/{id}', [AgendamentoController::class, 'put']);
+Route::post('/agendamentos', [AgendamentoController::class, 'post']);
+Route::put('/agendamentos/{id}', [AgendamentoController::class, 'put']);
 // Route::patch('/agendamentos/{id}', [AgendamentoController::class, 'patch']);
 Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'delete']);
 
