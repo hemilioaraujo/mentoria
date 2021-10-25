@@ -39,8 +39,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'App\Repositories\Contracts\AgendamentoServicoRepositoryInterface',
-            'App\Repositories\Eloquent\AgendamentoServicoRepository'
+            'App\Repositories\Contracts\AgendamentoRepositoryInterface',
+            'App\Repositories\Eloquent\AgendamentoRepository'
         );
     }
 
