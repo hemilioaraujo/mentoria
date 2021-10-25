@@ -16,6 +16,6 @@ class Animal extends Model
 
     public function tutor()
     {
-        return $this->belongsTo(Tutor::class)->get();
+        return $this->belongsTo(Tutor::class);
     }
 }
