@@ -37,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\FuncionarioServicoRepositoryInterface',
             'App\Repositories\Eloquent\FuncionarioServicoRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Contracts\AgendamentoServicoRepositoryInterface',
+            'App\Repositories\Eloquent\AgendamentoServicoRepository'
+        );
     }
 
     /**
