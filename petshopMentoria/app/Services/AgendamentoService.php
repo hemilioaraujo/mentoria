@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Http\Requests\Agendamento\AgendamentoPostRequest;
 use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
 use App\Http\Requests\Funcionario\FuncionarioRequest;
+use App\Http\Resources\AgendamentoResource;
+use App\Models\Agendamento;
 use App\Repositories\Contracts\AgendamentoRepositoryInterface;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -23,7 +25,7 @@ class AgendamentoService
     public function index()
     {
         $agenda = $this->repository->all();
-        return Response($agenda, StatusCodeInterface::STATUS_OK);
+        return Response(AgendamentoResource::collection($agenda), StatusCodeInterface::STATUS_OK);
     }
 
     public function post(AgendamentoPostRequest $request)
@@ -34,7 +36,7 @@ class AgendamentoService
         if ($funcionario->fazServico($servico)) {
             if ($funcionario->disponivel($request->get('inicio'), $request->get('fim'))) {
                 $agendamento = $this->repository->create($request->all());
-                return Response($agendamento, StatusCodeInterface::STATUS_CREATED);
+                return Response(new AgendamentoResource($agendamento), StatusCodeInterface::STATUS_CREATED);
             } else {
                 return Response(
                     ['erro' => 'Este colaraborador não está disponível para este horário.'],
@@ -54,7 +56,7 @@ class AgendamentoService
         $agenda = $this->repository->find($id);
 
         if ($agenda) {
-            return Response($agenda, StatusCodeInterface::STATUS_OK);
+            return Response(new AgendamentoResource($agenda), StatusCodeInterface::STATUS_OK);
         }
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
@@ -106,5 +108,11 @@ class AgendamentoService
             [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
+    }
+
+    public function agendamentosPorFuncionario(int $id, $data = null)
+    {
+        $agendamentos = $this->repository->agendamentosPorFuncionario($id);
+        return Response(AgendamentoResource::collection($agendamentos), StatusCodeInterface::STATUS_OK);
     }
 }
