@@ -60,7 +60,7 @@ Route::delete('/servicos/{id}', [ServicoController::class, 'delete']);
  */
 Route::get('/funcionarios', [FuncionarioController::class, 'index']);
 Route::get('/funcionarios/{id}', [FuncionarioController::class, 'show']);
-Route::get('/funcionarios/{id}/agendamentos', [FuncionarioController::class, 'agendamentos']);
+Route::get('/funcionarios/{id}/agendamentos', [AgendamentoController::class, 'agendamentosPorFuncionario']);
 Route::post('/funcionarios', [FuncionarioController::class, 'post']);
 Route::put('/funcionarios/{id}', [FuncionarioController::class, 'put']);
 Route::patch('/funcionarios/{id}', [FuncionarioController::class, 'patch']);
