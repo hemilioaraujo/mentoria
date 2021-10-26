@@ -46,4 +46,9 @@ class AgendamentoController extends Controller
     {
         return $this->service->delete($id);
     }
+
+    public function agendamentosPorFuncionario(int $id, $data = null)
+    {
+        return $this->service->agendamentosPorFuncionario($id);
+    }
 }

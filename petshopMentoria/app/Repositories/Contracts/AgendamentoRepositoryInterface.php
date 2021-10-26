@@ -9,4 +9,5 @@ interface AgendamentoRepositoryInterface
     public function update(array $data, int $id);
     public function delete(int $id);
     public function create(array $data);
+    public function agendamentosPorFuncionario(int $id, $data = null);
 }
