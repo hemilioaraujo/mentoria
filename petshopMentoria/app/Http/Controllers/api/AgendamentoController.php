@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Agendamento\AgendamentoFiltroDataRequest;
 use App\Http\Requests\Agendamento\AgendamentoPostRequest;
 use App\Repositories\Contracts\AgendamentoRepositoryInterface;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
@@ -47,8 +48,8 @@ class AgendamentoController extends Controller
         return $this->service->delete($id);
     }
 
-    public function agendamentosPorFuncionario(int $id, $data = null)
+    public function agendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
     {
-        return $this->service->agendamentosPorFuncionario($id);
+        return $this->service->agendamentosPorFuncionario($request, $id);
     }
 }
