@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\Animal\AnimalPatchRequest;
 use App\Http\Requests\Animal\AnimalPostRequest;
 use App\Http\Requests\Animal\AnimalPutRequest;
+use App\Http\Resources\AnimalResource;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 
@@ -20,13 +21,13 @@ class AnimalService
     public function index()
     {
         $animais = $this->repository->all();
-        return Response($animais, StatusCodeInterface::STATUS_OK);
+        return Response(AnimalResource::collection($animais), StatusCodeInterface::STATUS_OK);
     }
 
     public function post(AnimalPostRequest $request)
     {
         $animal = $this->repository->create($request->all());
-        return Response($animal, StatusCodeInterface::STATUS_CREATED);
+        return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_CREATED);
     }
 
     public function show(int $id)
@@ -34,7 +35,7 @@ class AnimalService
         $animal = $this->repository->find($id);
 
         if ($animal) {
-            return Response($animal, StatusCodeInterface::STATUS_OK);
+            return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_OK);
         }
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
@@ -82,17 +83,5 @@ class AnimalService
             [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
-    }
-
-    public function tutor(int $id)
-    {
-        $animal = $this->repository->find($id);
-        if ($animal) {
-            $tutor = $animal->tutor();
-            if ($tutor) {
-                return Response($tutor, StatusCodeInterface::STATUS_OK);
-            }
-        }
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }
