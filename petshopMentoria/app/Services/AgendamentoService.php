@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\Agendamento\AgendamentoFiltroDataRequest;
 use App\Http\Requests\Agendamento\AgendamentoPostRequest;
 use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
 use App\Http\Requests\Funcionario\FuncionarioRequest;
@@ -10,6 +11,7 @@ use App\Models\Agendamento;
 use App\Repositories\Contracts\AgendamentoRepositoryInterface;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use Illuminate\Http\Client\Request;
 
 class AgendamentoService
 {
@@ -110,8 +112,14 @@ class AgendamentoService
         );
     }
 
-    public function agendamentosPorFuncionario(int $id, $data = null)
+    public function agendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
     {
+        if ($request->has('data')) {
+            // return $request->all();
+            $agendamentos = $this->repository->agendamentosPorFuncionario($id, $request->input('data'));
+            return Response(AgendamentoResource::collection($agendamentos), StatusCodeInterface::STATUS_OK);
+        }
+
         $agendamentos = $this->repository->agendamentosPorFuncionario($id);
         return Response(AgendamentoResource::collection($agendamentos), StatusCodeInterface::STATUS_OK);
     }
