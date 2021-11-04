@@ -11,6 +11,9 @@ class AgendamentoRepository extends AbstractRepository implements AgendamentoRep
 
     public function agendamentosPorFuncionario(int $id, $data = null)
     {
+        if ($data) {
+            return Agendamento::where('funcionario_id', $id)->whereDate('inicio', $data)->get();
+        }
         return Agendamento::where('funcionario_id', $id)->get();
     }
 }
