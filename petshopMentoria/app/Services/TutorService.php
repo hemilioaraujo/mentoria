@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\Tutor\TutorPatchRequest;
 use App\Http\Requests\Tutor\TutorPostRequest;
 use App\Http\Requests\Tutor\TutorPutRequest;
+use App\Http\Resources\TutorResource;
 use App\Repositories\Contracts\TutorRepositoryInterface;
 use App\Repositories\Eloquent\TutorRepository;
 use Fig\Http\Message\StatusCodeInterface;
@@ -22,9 +23,6 @@ class TutorService
     public function index()
     {
         $tutores = $this->repository->all();
-        foreach ($tutores as $tutor) {
-            $tutor['animais'] = $tutor->animais();
-        }
         return Response($tutores, StatusCodeInterface::STATUS_OK);
     }
 
@@ -81,10 +79,7 @@ class TutorService
     {
         $tutor = $this->repository->find($id);
         if ($tutor) {
-            $animais = $tutor->animais();
-            if ($animais) {
-                return Response($animais, StatusCodeInterface::STATUS_OK);
-            }
+            return Response(new TutorResource($tutor), StatusCodeInterface::STATUS_OK);
         }
 
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
