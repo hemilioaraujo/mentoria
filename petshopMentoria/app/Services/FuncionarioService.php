@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
 use App\Http\Requests\Funcionario\FuncionarioRequest;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
+use Facade\FlareClient\Http\Response;
 use Fig\Http\Message\StatusCodeInterface;
 
 class FuncionarioService
@@ -18,21 +19,21 @@ class FuncionarioService
 
     public function index()
     {
-        $tutores = $this->repository->all();
-        return Response($tutores, StatusCodeInterface::STATUS_OK);
+        $funcionarios = $this->repository->all();
+        return Response($funcionarios, StatusCodeInterface::STATUS_OK);
     }
 
     public function post(FuncionarioRequest $request)
     {
-        $tutor = $this->repository->create($request->all());
-        return Response($tutor, StatusCodeInterface::STATUS_CREATED);
+        $funcionario = $this->repository->create($request->all());
+        return Response($funcionario, StatusCodeInterface::STATUS_CREATED);
     }
 
     public function show(int $id)
     {
-        $tutor = $this->repository->find($id);
-        if ($tutor) {
-            return Response($tutor, StatusCodeInterface::STATUS_OK);
+        $funcionario = $this->repository->find($id);
+        if ($funcionario) {
+            return Response($funcionario, StatusCodeInterface::STATUS_OK);
         }
 
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
@@ -66,6 +67,17 @@ class FuncionarioService
     {
         if ($this->repository->delete($id)) {
             return Response([], StatusCodeInterface::STATUS_NO_CONTENT);
+        }
+
+        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+    }
+
+    public function agendamentos(int $id)
+    {
+        $funcionario = $this->repository->find($id);
+        if ($funcionario) {
+            return $funcionario->agendamentos->toJson();
+            return Response($funcionario->agendamentos, StatusCodeInterface::STATUS_OK);
         }
 
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
