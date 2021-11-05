@@ -26,10 +26,8 @@ class TutorResource extends JsonResource
     public function animaisToArray()
     {
         $colecao = [];
-        $count = 0;
 
         foreach ($this->animais as $animal) {
-            $count += 1;
             $colecao[] = [
                 'id' => $animal->id,
                 'nome' => $animal->nome,
