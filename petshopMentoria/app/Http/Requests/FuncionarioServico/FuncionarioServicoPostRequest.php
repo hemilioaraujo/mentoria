@@ -34,7 +34,7 @@ class FuncionarioServicoPostRequest extends FormRequest
         return [
             'required' => 'O :attribute é obrigatório.',
             'exists' => 'O :attribute não existe.',
-            'numeric'=> 'O id do :attribute deve ser numérico'
+            'numeric' => 'O id do :attribute deve ser numérico'
         ];
     }
 

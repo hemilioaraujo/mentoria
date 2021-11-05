@@ -40,7 +40,7 @@ class AgendamentoPostRequest extends FormRequest
             'integer' => 'O campo de :attribute deve ser do tipo inteiro.',
             'exists' => 'O :attribute informado não existe.',
             'date' => 'A :attribute informadas não são válidas.',
-            'after'=> 'A data final não pode ser igual ou anterior a de início.'
+            'after' => 'A data final não pode ser igual ou anterior a de início.'
         ];
     }
 

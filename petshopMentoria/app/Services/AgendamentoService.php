@@ -18,8 +18,10 @@ class AgendamentoService
     private $repository;
     private $funcionario;
 
-    public function __construct(AgendamentoRepositoryInterface $repository, FuncionarioRepositoryInterface $funcionarioRepository)
-    {
+    public function __construct(
+        AgendamentoRepositoryInterface $repository,
+        FuncionarioRepositoryInterface $funcionarioRepository
+    ) {
         $this->repository = $repository;
         $this->funcionario = $funcionarioRepository;
     }

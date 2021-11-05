@@ -21,11 +21,11 @@ class AnimalResource extends JsonResource
             'tipo' => $this->tipo,
             'raca' => $this->raca,
             'tutor' => [
-                'id'=>$this->tutor->id,
-                'nome'=>$this->tutor->nome,
-                'telefone'=>$this->tutor->telefone,
-                'cpf'=>$this->tutor->cpf,
-                'id'=>$this->tutor->id,
+                'id' => $this->tutor->id,
+                'nome' => $this->tutor->nome,
+                'telefone' => $this->tutor->telefone,
+                'cpf' => $this->tutor->cpf,
+                'id' => $this->tutor->id,
             ],
         ];
     }
