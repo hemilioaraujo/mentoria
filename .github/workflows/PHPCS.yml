@@ -2,28 +2,32 @@ name: PHPCS
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Validar composer.json e composer.lock
+        run: composer validate --strict
+
+      - name: Verificar erro de sintaxe
+        run: php -l petshopMentoria/app/
+
+      - name: Instalar PHPCS
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+            curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+            php phpcs.phar --version
+            php phpcs.phar --config-set default_standard PSR12
+            php phpcs.phar petshopMentoria/app/
 
-      - name: PHP Code Style (phpcs)
-        uses: chindit/actions-phpcs@master
-        with:
-          cli: --config-set default_standard PSR12
-          # Folder to check code style
-          dir: petshopMentoria/app/
+      # - name: PHP Code Style (phpcs)
+      #   uses: chindit/actions-phpcs@master
+      #   with:
+      #     cli: --config-set default_standard PSR12
+      #     # Folder to check code style
+      #     dir: petshopMentoria/app/
