@@ -24,5 +24,6 @@ jobs:
       - name: PHP Code Style (phpcs)
         uses: chindit/actions-phpcs@master
         with:
+          cli: --config-set default_standard PSR12
           # Folder to check code style
           dir: petshopMentoria/app/
