@@ -14,23 +14,16 @@ jobs:
 
       - name: Validar composer.json e composer.lock
         run: |
-            cd petshopMentoria
-            composer validate --strict
-            cd ..
+          cd petshopMentoria
+          composer validate --strict
+          cd ..
 
       # - name: Verificar erro de sintaxe
       #   run: php -l petshopMentoria/app/
 
       - name: Instalar e executar PHPCS
         run: |
-            curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-            php phpcs.phar --version
-            php phpcs.phar --config-set default_standard PSR12
-            php phpcs.phar petshopMentoria/app/
-
-      # - name: PHP Code Style (phpcs)
-      #   uses: chindit/actions-phpcs@master
-      #   with:
-      #     cli: --config-set default_standard PSR12
-      #     # Folder to check code style
-      #     dir: petshopMentoria/app/
+          curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+          php phpcs.phar --version
+          php phpcs.phar --config-set default_standard PSR12
+          php phpcs.phar petshopMentoria/app/
