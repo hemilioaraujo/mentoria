@@ -18,19 +18,19 @@ class AnimalService
         $this->repository = $repository;
     }
 
-    public function index()
+    public function listarAnimais()
     {
         $animais = $this->repository->all();
         return Response(AnimalResource::collection($animais), StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(AnimalPostRequest $request)
+    public function registrarAnimal(AnimalPostRequest $request)
     {
         $animal = $this->repository->create($request->all());
         return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show(int $id)
+    public function exibirAnimal(int $id)
     {
         $animal = $this->repository->find($id);
 
@@ -40,7 +40,7 @@ class AnimalService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(AnimalPatchRequest $request, int $id)
+    public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -55,7 +55,7 @@ class AnimalService
         );
     }
 
-    public function put(AnimalPutRequest $request, int $id)
+    public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -70,7 +70,7 @@ class AnimalService
         );
     }
 
-    public function delete(int $id)
+    public function removerAnimal(int $id)
     {
         if ($this->repository->delete($id)) {
             return Response(

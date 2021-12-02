@@ -25,12 +25,12 @@ use Illuminate\Support\Facades\Route;
 /**
  * Rotas para Animais
  */
-Route::get('/animais', [AnimalController::class, 'index']);
-Route::get('/animais/{id}', [AnimalController::class, 'show']);
-Route::post('/animais', [AnimalController::class, 'post']);
-Route::put('/animais/{id}', [AnimalController::class, 'put']);
-Route::patch('/animais/{id}', [AnimalController::class, 'patch']);
-Route::delete('/animais/{id}', [AnimalController::class, 'delete']);
+Route::get('/animais', [AnimalController::class, 'listarAnimais']);
+Route::get('/animais/{id}', [AnimalController::class, 'exibirAnimal']);
+Route::post('/animais', [AnimalController::class, 'registrarAnimal']);
+Route::put('/animais/{id}', [AnimalController::class, 'alterarAnimal']);
+Route::patch('/animais/{id}', [AnimalController::class, 'corrigirAnimal']);
+Route::delete('/animais/{id}', [AnimalController::class, 'removerAnimal']);
 
 /**
  * Rotas para Tutores

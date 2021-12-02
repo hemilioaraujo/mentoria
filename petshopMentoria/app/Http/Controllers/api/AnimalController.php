@@ -20,33 +20,33 @@ class AnimalController extends Controller
         $this->animalService = $animalService;
     }
 
-    public function index(AnimalRepositoryInterface $model)
+    public function listarAnimais(AnimalRepositoryInterface $model)
     {
-        return $this->animalService->index();
+        return $this->animalService->listarAnimais();
     }
 
-    public function post(AnimalPostRequest $request)
+    public function registrarAnimal(AnimalPostRequest $request)
     {
-        return $this->animalService->post($request);
+        return $this->animalService->registrarAnimal($request);
     }
 
-    public function show(int $id)
+    public function exibirAnimal(int $id)
     {
-        return $this->animalService->show($id);
+        return $this->animalService->exibirAnimal($id);
     }
 
-    public function patch(AnimalPatchRequest $request, int $id)
+    public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
-        return $this->animalService->patch($request, $id);
+        return $this->animalService->corrigirAnimal($request, $id);
     }
 
-    public function put(AnimalPutRequest $request, int $id)
+    public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
-        return $this->animalService->put($request, $id);
+        return $this->animalService->alterarAnimal($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerAnimal(int $id)
     {
-        return $this->animalService->delete($id);
+        return $this->animalService->removerAnimal($id);
     }
 }
