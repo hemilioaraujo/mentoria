@@ -23,13 +23,13 @@ class AgendamentoService
         $this->funcionario = $funcionarioRepository;
     }
 
-    public function index()
+    public function listarAgendamentos()
     {
         $agenda = $this->repository->all();
         return Response(AgendamentoResource::collection($agenda), StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(AgendamentoPostRequest $request)
+    public function registrarAgendamento(AgendamentoPostRequest $request)
     {
         $funcionario = $this->funcionario->find($request->get('funcionario_id'));
         $servico = $request->get('servico_id');
@@ -52,7 +52,7 @@ class AgendamentoService
         return Response(new AgendamentoResource($agendamento), StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show(int $id)
+    public function exibirAgendamento(int $id)
     {
         $agenda = $this->repository->find($id);
 
@@ -62,7 +62,7 @@ class AgendamentoService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(AgendamentoPostRequest $request, int $id)
+    public function alterarAgendamento(AgendamentoPostRequest $request, int $id)
     {
         $funcionario = $this->funcionario->find($request->get('funcionario_id'));
         $servico = $request->get('servico_id');
@@ -94,7 +94,7 @@ class AgendamentoService
         );
     }
 
-    public function delete(int $id)
+    public function removerAgendamento(int $id)
     {
         if ($this->repository->delete($id)) {
             return Response(
@@ -109,7 +109,7 @@ class AgendamentoService
         );
     }
 
-    public function agendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
+    public function listarAgendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
     {
         if ($request->has('data')) {
             // return $request->all();

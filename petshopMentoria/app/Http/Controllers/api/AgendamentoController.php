@@ -20,33 +20,33 @@ class AgendamentoController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function listarAgendamentos()
     {
-        return $this->service->index();
+        return $this->service->listarAgendamentos();
     }
 
-    public function post(AgendamentoPostRequest $request)
+    public function registrarAgendamento(AgendamentoPostRequest $request)
     {
-        return $this->service->post($request);
+        return $this->service->registrarAgendamento($request);
     }
 
-    public function show(int $id)
+    public function exibirAgendamento(int $id)
     {
-        return $this->service->show($id);
+        return $this->service->exibirAgendamento($id);
     }
 
-    public function put(AgendamentoPostRequest $request, int $id)
+    public function alterarAgendamento(AgendamentoPostRequest $request, int $id)
     {
-        return $this->service->put($request, $id);
+        return $this->service->alterarAgendamento($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerAgendamento(int $id)
     {
-        return $this->service->delete($id);
+        return $this->service->removerAgendamento($id);
     }
 
-    public function agendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
+    public function listarAgendamentosPorFuncionario(AgendamentoFiltroDataRequest $request, int $id)
     {
-        return $this->service->agendamentosPorFuncionario($request, $id);
+        return $this->service->listarAgendamentosPorFuncionario($request, $id);
     }
 }

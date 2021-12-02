@@ -47,43 +47,43 @@ Route::delete('/tutores/{id}', [TutorController::class, 'removerTutor']);
 /**
  * Rotas para Serviços
  */
-Route::get('/servicos', [ServicoController::class, 'index']);
-Route::get('/servicos/{id}', [ServicoController::class, 'show']);
-Route::post('/servicos', [ServicoController::class, 'post']);
-Route::put('/servicos/{id}', [ServicoController::class, 'put']);
-Route::patch('/servicos/{id}', [ServicoController::class, 'patch']);
-Route::delete('/servicos/{id}', [ServicoController::class, 'delete']);
+Route::get('/servicos', [ServicoController::class, 'listarServicos']);
+Route::get('/servicos/{id}', [ServicoController::class, 'exibirServico']);
+Route::post('/servicos', [ServicoController::class, 'registrarServico']);
+Route::put('/servicos/{id}', [ServicoController::class, 'alterarServico']);
+Route::patch('/servicos/{id}', [ServicoController::class, 'corrigirServico']);
+Route::delete('/servicos/{id}', [ServicoController::class, 'removerServico']);
 
 /**
  * Rotas para Funcionários
  */
-Route::get('/funcionarios', [FuncionarioController::class, 'index']);
-Route::get('/funcionarios/{id}', [FuncionarioController::class, 'show']);
-Route::get('/funcionarios/{id}/agendamentos', [AgendamentoController::class, 'agendamentosPorFuncionario']);
-Route::post('/funcionarios', [FuncionarioController::class, 'post']);
-Route::put('/funcionarios/{id}', [FuncionarioController::class, 'put']);
-Route::patch('/funcionarios/{id}', [FuncionarioController::class, 'patch']);
-Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'delete']);
+Route::get('/funcionarios', [FuncionarioController::class, 'listarFuncionarios']);
+Route::get('/funcionarios/{id}', [FuncionarioController::class, 'exibirFuncionario']);
+Route::get('/funcionarios/{id}/agendamentos', [AgendamentoController::class, 'listarAgendamentosPorFuncionario']);
+Route::post('/funcionarios', [FuncionarioController::class, 'registrarFuncionario']);
+Route::put('/funcionarios/{id}', [FuncionarioController::class, 'alterarFuncionario']);
+Route::patch('/funcionarios/{id}', [FuncionarioController::class, 'corrigirFuncionario']);
+Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'removerFuncionario']);
 
 /**
  * Rotas para Funcionários-Serviços
  */
-Route::get('/funcionarios-servicos', [FuncionarioServicoController::class, 'index']);
-Route::get('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'show']);
-Route::post('/funcionarios-servicos', [FuncionarioServicoController::class, 'post']);
-Route::put('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'put']);
-Route::patch('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'patch']);
-Route::delete('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'delete']);
+Route::get('/funcionarios-servicos', [FuncionarioServicoController::class, 'listarFuncionarioServicos']);
+Route::get('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'exibirFuncionarioServico']);
+Route::post('/funcionarios-servicos', [FuncionarioServicoController::class, 'registrarFuncionarioServico']);
+Route::put('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'alterarFuncionarioServico']);
+Route::patch('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'corrigirFuncionarioServico']);
+Route::delete('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'removerFuncionarioServico']);
 
 /**
  * Rotas para Agendamentos
  */
-Route::get('/agendamentos', [AgendamentoController::class, 'index']);
-Route::get('/agendamentos/{id}', [AgendamentoController::class, 'show']);
-Route::post('/agendamentos', [AgendamentoController::class, 'post']);
-Route::put('/agendamentos/{id}', [AgendamentoController::class, 'put']);
-// Route::patch('/agendamentos/{id}', [AgendamentoController::class, 'patch']);
-Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'delete']);
+Route::get('/agendamentos', [AgendamentoController::class, 'listarAgendamentos']);
+Route::get('/agendamentos/{id}', [AgendamentoController::class, 'exibirAgendamento']);
+Route::post('/agendamentos', [AgendamentoController::class, 'registrarAgendamento']);
+Route::put('/agendamentos/{id}', [AgendamentoController::class, 'alterarAgendamento']);
+// Route::patch('/agendamentos/{id}', [AgendamentoController::class, 'corrigirAgendamento']);
+Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'removerAgendamento']);
 
 /**
  * Rota de Fallback

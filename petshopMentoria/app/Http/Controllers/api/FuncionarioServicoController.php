@@ -17,33 +17,33 @@ class FuncionarioServicoController extends Controller
         $this->funcionarioServicoService = $funcionarioServicoService;
     }
 
-    public function index()
+    public function listarFuncionarioServicos()
     {
-        return $this->funcionarioServicoService->index();
+        return $this->funcionarioServicoService->listarFuncionarioServicos();
     }
 
-    public function post(FuncionarioServicoPostRequest $request)
+    public function registrarFuncionarioServico(FuncionarioServicoPostRequest $request)
     {
-        return $this->funcionarioServicoService->post($request);
+        return $this->funcionarioServicoService->registrarFuncionarioServico($request);
     }
 
-    public function show(int $id)
+    public function exibirFuncionarioServico(int $id)
     {
-        return $this->funcionarioServicoService->show($id);
+        return $this->funcionarioServicoService->exibirFuncionarioServico($id);
     }
 
-    public function patch(FuncionarioServicoPatchRequest $request, int $id)
+    public function corrigirFuncionarioServico(FuncionarioServicoPatchRequest $request, int $id)
     {
-        return $this->funcionarioServicoService->patch($request, $id);
+        return $this->funcionarioServicoService->corrigirFuncionarioServico($request, $id);
     }
 
-    public function put(FuncionarioServicoPostRequest $request, int $id)
+    public function alterarFuncionarioServico(FuncionarioServicoPostRequest $request, int $id)
     {
-        return $this->funcionarioServicoService->put($request, $id);
+        return $this->funcionarioServicoService->alterarFuncionarioServico($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerFuncionarioServico(int $id)
     {
-        return $this->funcionarioServicoService->delete($id);
+        return $this->funcionarioServicoService->removerFuncionarioServico($id);
     }
 }

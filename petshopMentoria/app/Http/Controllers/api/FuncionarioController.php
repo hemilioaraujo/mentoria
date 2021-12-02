@@ -17,34 +17,34 @@ class FuncionarioController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function listarFuncionarios()
     {
-        return $this->service->index();
+        return $this->service->listarFuncionarios();
     }
 
-    public function post(FuncionarioRequest $request)
+    public function registrarFuncionario(FuncionarioRequest $request)
     {
-        return $this->service->post($request);
+        return $this->service->registrarFuncionario($request);
     }
 
-    public function show(int $id)
+    public function exibirFuncionario(int $id)
     {
-        return $this->service->show($id);
+        return $this->service->exibirFuncionario($id);
     }
 
-    public function patch(FuncionarioPatchRequest $request, int $id)
+    public function corrigirFuncionario(FuncionarioPatchRequest $request, int $id)
     {
-        return $this->service->patch($request, $id);
+        return $this->service->corrigirFuncionario($request, $id);
     }
 
-    public function put(FuncionarioRequest $request, int $id)
+    public function alterarFuncionario(FuncionarioRequest $request, int $id)
     {
-        return $this->service->put($request, $id);
+        return $this->service->alterarFuncionario($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerFuncionario(int $id)
     {
-        return $this->service->delete($id);
+        return $this->service->removerFuncionario($id);
     }
 
     public function agendamentos(int $id)

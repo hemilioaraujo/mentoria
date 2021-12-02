@@ -17,19 +17,19 @@ class FuncionarioService
         $this->repository = $repository;
     }
 
-    public function index()
+    public function listarFuncionarios()
     {
         $funcionarios = $this->repository->all();
         return Response($funcionarios, StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(FuncionarioRequest $request)
+    public function registrarFuncionario(FuncionarioRequest $request)
     {
         $funcionario = $this->repository->create($request->all());
         return Response($funcionario, StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show(int $id)
+    public function exibirFuncionario(int $id)
     {
         $funcionario = $this->repository->find($id);
         if ($funcionario) {
@@ -39,7 +39,7 @@ class FuncionarioService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(FuncionarioPatchRequest $request, int $id)
+    public function corrigirFuncionario(FuncionarioPatchRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -51,7 +51,7 @@ class FuncionarioService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(FuncionarioRequest $request, int $id)
+    public function alterarFuncionario(FuncionarioRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -63,7 +63,7 @@ class FuncionarioService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function delete(int $id)
+    public function removerFuncionario(int $id)
     {
         if ($this->repository->delete($id)) {
             return Response([], StatusCodeInterface::STATUS_NO_CONTENT);

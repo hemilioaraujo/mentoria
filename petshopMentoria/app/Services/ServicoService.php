@@ -16,19 +16,19 @@ class ServicoService
         $this->repository = $repository;
     }
 
-    public function index()
+    public function listarServicos()
     {
         $tutores = $this->repository->all();
         return Response($tutores, StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(ServicoRequest $request)
+    public function registrarServico(ServicoRequest $request)
     {
         $tutor = $this->repository->create($request->all());
         return Response($tutor, StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show(int $id)
+    public function exibirServico(int $id)
     {
         $tutor = $this->repository->find($id);
         if ($tutor) {
@@ -38,7 +38,7 @@ class ServicoService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(ServicoPatchRequest $request, int $id)
+    public function corrigirServico(ServicoPatchRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -50,7 +50,7 @@ class ServicoService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(ServicoRequest $request, int $id)
+    public function alterarServico(ServicoRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -62,7 +62,7 @@ class ServicoService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function delete(int $id)
+    public function removerServico(int $id)
     {
         if ($this->repository->delete($id)) {
             return Response([], StatusCodeInterface::STATUS_NO_CONTENT);

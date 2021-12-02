@@ -17,33 +17,33 @@ class ServicoController extends Controller
         $this->servicoService = $servicoService;
     }
 
-    public function index()
+    public function listarServicos()
     {
-        return $this->servicoService->index();
+        return $this->servicoService->listarServicos();
     }
 
-    public function post(ServicoRequest $request)
+    public function registrarServico(ServicoRequest $request)
     {
-        return $this->servicoService->post($request);
+        return $this->servicoService->registrarServico($request);
     }
 
-    public function show(int $id)
+    public function exibirServico(int $id)
     {
-        return $this->servicoService->show($id);
+        return $this->servicoService->exibirServico($id);
     }
 
-    public function patch(ServicoPatchRequest $request, int $id)
+    public function corrigirServico(ServicoPatchRequest $request, int $id)
     {
-        return $this->servicoService->patch($request, $id);
+        return $this->servicoService->corrigirServico($request, $id);
     }
 
-    public function put(ServicoRequest $request, int $id)
+    public function alterarServico(ServicoRequest $request, int $id)
     {
-        return $this->servicoService->put($request, $id);
+        return $this->servicoService->alterarServico($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerServico(int $id)
     {
-        return $this->servicoService->delete($id);
+        return $this->servicoService->removerServico($id);
     }
 }
