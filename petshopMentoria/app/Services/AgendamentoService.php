@@ -67,33 +67,31 @@ class AgendamentoService
         $funcionario = $this->funcionario->find($request->get('funcionario_id'));
         $servico = $request->get('servico_id');
 
-        if ($funcionario->fazServico($servico)) {
-            if (
-                $funcionario->disponivel($request->get('inicio'), $request->get('fim'), $id)
-            ) {
-                if ($this->repository->update($request->all(), $id)) {
-                    return Response(
-                        ['status' => 'Recurso atualizado com sucesso.'],
-                        StatusCodeInterface::STATUS_OK
-                    );
-                }
-
-                return Response(
-                    [],
-                    StatusCodeInterface::STATUS_NOT_FOUND
-                );
-            } else {
-                return Response(
-                    ['erro' => 'Este colaraborador não está disponível para este horário.'],
-                    StatusCodeInterface::STATUS_NOT_FOUND
-                );
-            }
-        } else {
+        if (!$funcionario->fazServico($servico)) {
             return Response(
                 ['erro' => 'Este colaraborador não realiza este tipo de serviço.'],
                 StatusCodeInterface::STATUS_NOT_FOUND
             );
         }
+
+        if (!$funcionario->disponivel($request->get('inicio'), $request->get('fim'), $id)) {
+            return Response(
+                ['erro' => 'Este colaraborador não está disponível para este horário.'],
+                StatusCodeInterface::STATUS_NOT_FOUND
+            );
+        }
+
+        if ($this->repository->update($request->all(), $id)) {
+            return Response(
+                ['status' => 'Recurso atualizado com sucesso.'],
+                StatusCodeInterface::STATUS_OK
+            );
+        }
+
+        return Response(
+            [],
+            StatusCodeInterface::STATUS_NOT_FOUND
+        );
     }
 
     public function delete(int $id)
