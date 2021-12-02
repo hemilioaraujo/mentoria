@@ -10,6 +10,7 @@ use App\Http\Resources\AgendamentoResource;
 use App\Models\Agendamento;
 use App\Repositories\Contracts\AgendamentoRepositoryInterface;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
+use Dotenv\Repository\RepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Client\Request;
 
@@ -37,22 +38,22 @@ class AgendamentoService
         $funcionario = $this->funcionario->find($request->get('funcionario_id'));
         $servico = $request->get('servico_id');
 
-        if ($funcionario->fazServico($servico)) {
-            if ($funcionario->disponivel($request->get('inicio'), $request->get('fim'))) {
-                $agendamento = $this->repository->create($request->all());
-                return Response(new AgendamentoResource($agendamento), StatusCodeInterface::STATUS_CREATED);
-            } else {
-                return Response(
-                    ['erro' => 'Este colaraborador não está disponível para este horário.'],
-                    StatusCodeInterface::STATUS_NOT_FOUND
-                );
-            }
-        } else {
+        if (!$funcionario->fazServico($servico)) {
             return Response(
                 ['erro' => 'Este colaraborador não realiza este tipo de serviço.'],
                 StatusCodeInterface::STATUS_NOT_FOUND
             );
         }
+
+        if (!$funcionario->disponivel($request->get('inicio'), $request->get('fim'))) {
+            return Response(
+                ['erro' => 'Este colaraborador não está disponível para este horário.'],
+                StatusCodeInterface::STATUS_NOT_FOUND
+            );
+        }
+
+        $agendamento = $this->repository->create($request->all());
+        return Response(new AgendamentoResource($agendamento), StatusCodeInterface::STATUS_CREATED);
     }
 
     public function show(int $id)
