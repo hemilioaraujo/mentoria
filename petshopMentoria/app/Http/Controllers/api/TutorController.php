@@ -19,43 +19,43 @@ class TutorController extends Controller
         $this->tutorService = $tutorService;
     }
 
-    public function index()
+    public function listarTutores()
     {
-        return $this->tutorService->index();
+        return $this->tutorService->listarTutores();
     }
 
-    public function post(TutorPostRequest $request)
+    public function registrarTutor(TutorPostRequest $request)
     {
-        return $this->tutorService->post($request);
+        return $this->tutorService->registrarTutor($request);
     }
 
-    public function show(int $id)
+    public function exibirTutor(int $id)
     {
-        return $this->tutorService->show($id);
+        return $this->tutorService->exibirTutor($id);
     }
 
-    public function patch(TutorPatchRequest $request, int $id)
+    public function corrigirTutor(TutorPatchRequest $request, int $id)
     {
-        return $this->tutorService->patch($request, $id);
+        return $this->tutorService->corrigirTutor($request, $id);
     }
 
-    public function put(TutorPutRequest $request, int $id)
+    public function alterarTutor(TutorPutRequest $request, int $id)
     {
-        return $this->tutorService->put($request, $id);
+        return $this->tutorService->alterarTutor($request, $id);
     }
 
-    public function delete(int $id)
+    public function removerTutor(int $id)
     {
-        return $this->tutorService->delete($id);
+        return $this->tutorService->removerTutor($id);
     }
 
-    public function animais(int $id)
+    public function listarAnimaisDoTutor(int $id)
     {
-        return $this->tutorService->animais($id);
+        return $this->tutorService->listarAnimaisDoTutor($id);
     }
 
-    public function animaisId(int $id_tutor, int $id_animal)
+    public function listarAnimaisDoTutorPorId(int $id_tutor, int $id_animal)
     {
-        return $this->tutorService->animaisId($id_tutor, $id_animal);
+        return $this->tutorService->listarAnimaisDoTutorPorId($id_tutor, $id_animal);
     }
 }

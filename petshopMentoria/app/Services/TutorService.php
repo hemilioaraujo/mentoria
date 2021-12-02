@@ -18,19 +18,19 @@ class TutorService
         $this->repository = $repository;
     }
 
-    public function index()
+    public function listarTutores()
     {
         $tutores = $this->repository->all();
         return Response($tutores, StatusCodeInterface::STATUS_OK);
     }
 
-    public function post(TutorPostRequest $request)
+    public function registrarTutor(TutorPostRequest $request)
     {
         $tutor = $this->repository->create($request->all());
         return Response($tutor, StatusCodeInterface::STATUS_CREATED);
     }
 
-    public function show(int $id)
+    public function exibirTutor(int $id)
     {
         $tutor = $this->repository->find($id);
         if ($tutor) {
@@ -40,7 +40,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function patch(TutorPatchRequest $request, int $id)
+    public function corrigirTutor(TutorPatchRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -52,7 +52,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function put(TutorPutRequest $request, int $id)
+    public function alterarTutor(TutorPutRequest $request, int $id)
     {
         if ($this->repository->update($request->all(), $id)) {
             return Response(
@@ -64,7 +64,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function delete(int $id)
+    public function removerTutor(int $id)
     {
         if ($this->repository->delete($id)) {
             return Response([], StatusCodeInterface::STATUS_NO_CONTENT);
@@ -73,7 +73,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function animais(int $id)
+    public function listarAnimaisDoTutor(int $id)
     {
         $tutor = $this->repository->find($id);
         if ($tutor) {
@@ -83,7 +83,7 @@ class TutorService
         return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
-    public function animaisId(int $id_tutor, int $id_animal)
+    public function listarAnimaisDoTutorPorId(int $id_tutor, int $id_animal)
     {
         $tutor = $this->repository->find($id_tutor);
         if ($tutor) {
