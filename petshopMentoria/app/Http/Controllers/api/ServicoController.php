@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ServicoController extends Controller
 {
-    private $servicoService;
+    private ServicoService $servicoService;
 
     public function __construct(ServicoService $servicoService)
     {

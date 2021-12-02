@@ -10,7 +10,7 @@ use Fig\Http\Message\StatusCodeInterface;
 
 class FuncionarioService
 {
-    private $repository;
+    private FuncionarioRepositoryInterface $repository;
 
     public function __construct(FuncionarioRepositoryInterface $repository)
     {

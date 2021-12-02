@@ -5,18 +5,15 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Agendamento\AgendamentoFiltroDataRequest;
 use App\Http\Requests\Agendamento\AgendamentoPostRequest;
-use App\Repositories\Contracts\AgendamentoRepositoryInterface;
-use App\Repositories\Contracts\FuncionarioRepositoryInterface;
 use App\Services\AgendamentoService;
 use Facade\FlareClient\Http\Response;
-use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 
 use function PHPSTORM_META\type;
 
 class AgendamentoController extends Controller
 {
-    private $service;
+    private AgendamentoService $service;
 
     public function __construct(AgendamentoService $service)
     {

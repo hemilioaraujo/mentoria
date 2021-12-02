@@ -6,17 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Animal\AnimalPostRequest;
 use App\Http\Requests\Animal\AnimalPatchRequest;
 use App\Http\Requests\Animal\AnimalPutRequest;
-use App\Models\Animal;
-use App\Models\Tutor;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
 use App\Services\AnimalService;
-use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AnimalController extends Controller
 {
-    private $animalService;
+    private AnimalService $animalService;
 
     public function __construct(AnimalService $animalService)
     {

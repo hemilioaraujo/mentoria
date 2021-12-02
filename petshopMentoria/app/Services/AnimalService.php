@@ -11,7 +11,7 @@ use Fig\Http\Message\StatusCodeInterface;
 
 class AnimalService
 {
-    private $repository;
+    private AnimalRepositoryInterface $repository;
 
     public function __construct(AnimalRepositoryInterface $repository)
     {

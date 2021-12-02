@@ -7,13 +7,11 @@ use App\Http\Requests\Tutor\TutorPostRequest;
 use App\Http\Requests\Tutor\TutorPutRequest;
 use App\Http\Resources\TutorResource;
 use App\Repositories\Contracts\TutorRepositoryInterface;
-use App\Repositories\Eloquent\TutorRepository;
 use Fig\Http\Message\StatusCodeInterface;
 
 class TutorService
 {
-    private $repository;
-    private $validator;
+    private TutorRepositoryInterface $repository;
 
     public function __construct(TutorRepositoryInterface $repository)
     {

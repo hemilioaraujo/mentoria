@@ -4,20 +4,16 @@ namespace App\Services;
 
 use App\Http\Requests\Agendamento\AgendamentoFiltroDataRequest;
 use App\Http\Requests\Agendamento\AgendamentoPostRequest;
-use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
-use App\Http\Requests\Funcionario\FuncionarioRequest;
 use App\Http\Resources\AgendamentoResource;
-use App\Models\Agendamento;
 use App\Repositories\Contracts\AgendamentoRepositoryInterface;
 use App\Repositories\Contracts\FuncionarioRepositoryInterface;
-use Dotenv\Repository\RepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Client\Request;
 
 class AgendamentoService
 {
-    private $repository;
-    private $funcionario;
+    private AgendamentoRepositoryInterface $repository;
+    private FuncionarioRepositoryInterface $funcionario;
 
     public function __construct(
         AgendamentoRepositoryInterface $repository,
