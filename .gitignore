@@ -4,3 +4,5 @@ petshopMentoria/.env.example
 .vscode/launch.json
 .vscode/settings.json
 petshopMentoria/app/Http/Controllers/TesteController.php
+docs/notas.MD
+petshopMentoria/.docker/redisdata/dump.rdb
