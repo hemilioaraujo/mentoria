@@ -8,14 +8,18 @@ use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Http\Resources\AnimalResource;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Redis;
 
 class AnimalService
 {
     private AnimalRepositoryInterface $repository;
+    private $redis;
 
     public function __construct(AnimalRepositoryInterface $repository)
     {
         $this->repository = $repository;
+        $this->redis = Redis::connection();
     }
 
     public function listarAnimais()
@@ -83,5 +87,52 @@ class AnimalService
             [],
             StatusCodeInterface::STATUS_NOT_FOUND
         );
+    }
+
+    public function racas()
+    {
+        $racas = $this->getRemoteRacas();
+        return Response()->json(
+            ["raças" => $racas],
+            StatusCodeInterface::STATUS_OK
+        );
+    }
+
+    private function getRemoteRacas()
+    {
+        $client = new Client();
+        $url = "https://dog.ceo/api/breeds/list/all";
+        $response = $client->request('get', $url, ['http_errors' => false]);
+        if ($response->getStatusCode() == StatusCodeInterface::STATUS_OK) {
+            $body = json_decode($response->getBody(), true);
+            $racas = array_keys($body['message']);
+            $this->setRacasOnRedis($racas);
+            return $racas;
+        }
+        return $this->getRacasFromRedis();
+    }
+
+    private function setRacasOnRedis(array $racas)
+    {
+        $this->delRacasOnRedis();
+        foreach ($racas as $raca) {
+            $this->redis->rpush('racas', $raca);
+        }
+    }
+
+    private function getRacasFromRedis()
+    {
+        if ($this->redis->exists('racas')) {
+            return $this->redis->lrange('racas', 0, -1);
+        }
+        return [];
+    }
+
+    private function delRacasOnRedis()
+    {
+        if ($this->redis->exists('racas')) {
+            return $this->redis->del('racas');
+        }
+        return false;
     }
 }
