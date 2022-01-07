@@ -49,4 +49,9 @@ class AnimalController extends Controller
     {
         return $this->animalService->removerAnimal($id);
     }
+
+    public function racas()
+    {
+        return $this->animalService->racas();
+    }
 }
