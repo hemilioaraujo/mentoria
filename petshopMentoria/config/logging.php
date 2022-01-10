@@ -3,6 +3,7 @@
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
+use Monolog\Handler\TelegramBotHandler;
 
 return [
 
@@ -37,7 +38,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single','stderr','telegram'],
             'ignore_exceptions' => false,
         ],
 
@@ -80,6 +81,16 @@ return [
             'with' => [
                 'stream' => 'php://stderr',
             ],
+        ],
+
+        'telegram' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => TelegramBotHandler::class,
+            'with'=>[
+                'apiKey'=>env('TL_TOKEN','abc'),
+                'channel'=>env('TL_CHAT','@Hemilio')
+            ]
         ],
 
         'syslog' => [
