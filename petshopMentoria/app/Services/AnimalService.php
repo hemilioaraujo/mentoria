@@ -7,9 +7,11 @@ use App\Http\Requests\Animal\AnimalPostRequest;
 use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Http\Resources\AnimalResource;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
+use Exception;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Request;
 
 class AnimalService
 {
@@ -24,14 +26,24 @@ class AnimalService
 
     public function listarAnimais()
     {
-        $animais = $this->repository->all();
-        return Response(AnimalResource::collection($animais), StatusCodeInterface::STATUS_OK);
+        try {
+            $animais = $this->repository->all();
+            return ['success' => true, 'data' => $animais];
+        } catch (Exception $e) {
+            return ['success' => false, 'exception' => $e->getMessage()];
+        }
+        // return Response(AnimalResource::collection($animais), StatusCodeInterface::STATUS_OK);
     }
 
     public function registrarAnimal(AnimalPostRequest $request)
     {
-        $animal = $this->repository->create($request->all());
-        return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_CREATED);
+        try {
+            $animal = $this->repository->create($request->all());
+            return ['success' => true, 'data' => $animal];
+        } catch (Exception $e) {
+            return ['success' => false, 'exception' => $e->getMessage()];
+        }
+        // return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_CREATED);
     }
 
     public function exibirAnimal(int $id)
