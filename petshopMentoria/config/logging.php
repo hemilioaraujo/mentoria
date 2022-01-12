@@ -1,9 +1,9 @@
 <?php
 
+use App\Handlers\TelegramBotHandlerCustom;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
-use Monolog\Handler\TelegramBotHandler;
 
 return [
 
@@ -86,7 +86,7 @@ return [
         'telegram' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
-            'handler' => TelegramBotHandler::class,
+            'handler' => TelegramBotHandlerCustom::class,
             'with'=>[
                 'apiKey'=>env('TL_TOKEN','abc'),
                 'channel'=>env('TL_CHAT','@Hemilio')
