@@ -26,16 +26,12 @@ class TelegramBotHandlerCustom extends TelegramBotHandler
 
     protected function splitMessages(string $message)
     {
-        $indice = 0;
-        $messages = [0 => ''];
+        $position = 0;
+        $messages = [];
 
-        for ($i = 0; $i < strlen($message); $i++) {
-            if (strlen($messages[$indice]) < $this->maxMessageLenght) {
-                $messages[$indice] .= $message[$i];
-            } else {
-                $indice += 1;
-                $messages[] .= $message[$i];
-            }
+        while (strlen(substr($message, $position, $this->maxMessageLenght)) != 0) {
+            $messages[] = substr($message, $position, $this->maxMessageLenght);
+            $position += $this->maxMessageLenght;
         }
         return $messages;
     }
