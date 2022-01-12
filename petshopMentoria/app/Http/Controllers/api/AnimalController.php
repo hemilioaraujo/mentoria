@@ -28,12 +28,12 @@ class AnimalController extends Controller
         if ($response['success']) {
             return Response(
                 AnimalResource::collection($response['data']),
-                StatusCodeInterface::STATUS_OK
+                $response['status_code']
             );
         }
         return Response(
             [],
-            StatusCodeInterface::STATUS_NOT_FOUND
+            $response['status_code']
         );
     }
 
@@ -43,18 +43,28 @@ class AnimalController extends Controller
         if ($response['success']) {
             return Response(
                 new AnimalResource($response['data']),
-                StatusCodeInterface::STATUS_CREATED
+                $response['status_code']
             );
         }
         return Response(
-            $response['exception'],
-            StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
+            [],
+            $response['status_code']
         );
     }
 
     public function exibirAnimal(int $id)
     {
-        return $this->animalService->exibirAnimal($id);
+        $response = $this->animalService->exibirAnimal($id);
+        if ($response['success'] && $response['status_code'] == 200) {
+            return Response(
+                new AnimalResource($response['data']),
+                $response['status_code']
+            );
+        }
+        return Response(
+            [],
+            $response['status_code']
+        );
     }
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)

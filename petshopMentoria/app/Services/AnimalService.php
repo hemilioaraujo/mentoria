@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use App\Http\Requests\Animal\AnimalPatchRequest;
-use App\Http\Requests\Animal\AnimalPostRequest;
-use App\Http\Requests\Animal\AnimalPutRequest;
-use App\Http\Resources\AnimalResource;
-use App\Repositories\Contracts\AnimalRepositoryInterface;
 use Exception;
-use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Resources\AnimalResource;
 use Illuminate\Support\Facades\Request;
+use Fig\Http\Message\StatusCodeInterface;
+use App\Http\Requests\Animal\AnimalPutRequest;
+use App\Http\Requests\Animal\AnimalPostRequest;
+use App\Http\Requests\Animal\AnimalPatchRequest;
+use App\Repositories\Contracts\AnimalRepositoryInterface;
 
 class AnimalService
 {
@@ -28,32 +29,37 @@ class AnimalService
     {
         try {
             $animais = $this->repository->all();
-            return ['success' => true, 'data' => $animais];
+            return ['success' => true, 'data' => $animais, 'status_code' => StatusCodeInterface::STATUS_OK];
         } catch (Exception $e) {
-            return ['success' => false, 'exception' => $e->getMessage()];
+            Log::error("Erro ao listar animais.", ['exception' => $e->getMessage()]);
+            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
         }
-        // return Response(AnimalResource::collection($animais), StatusCodeInterface::STATUS_OK);
     }
 
     public function registrarAnimal(AnimalPostRequest $request)
     {
         try {
             $animal = $this->repository->create($request->all());
-            return ['success' => true, 'data' => $animal];
+            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_CREATED];
         } catch (Exception $e) {
-            return ['success' => false, 'exception' => $e->getMessage()];
+            Log::error("Erro ao registrar animal.", ['exception' => $e->getMessage()]);
+            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
         }
-        // return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_CREATED);
     }
 
     public function exibirAnimal(int $id)
     {
-        $animal = $this->repository->find($id);
+        try {
+            $animal = $this->repository->find($id);
+        } catch (Exception $e) {
+            Log::error("Erro ao exibir animal.", ['exception' => $e->getMessage()]);
+            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+        }
 
         if ($animal) {
-            return Response(new AnimalResource($animal), StatusCodeInterface::STATUS_OK);
+            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_OK];
         }
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+        return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_NOT_FOUND];
     }
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
