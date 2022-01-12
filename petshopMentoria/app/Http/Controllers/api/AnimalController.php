@@ -69,7 +69,17 @@ class AnimalController extends Controller
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
-        return $this->animalService->corrigirAnimal($request, $id);
+        $response = $this->animalService->corrigirAnimal($request, $id);
+        if ($response['success'] && $response['status_code'] == 200) {
+            return Response(
+                [],
+                $response['status_code']
+            );
+        }
+        return Response(
+            [],
+            $response['status_code']
+        );
     }
 
     public function alterarAnimal(AnimalPutRequest $request, int $id)
