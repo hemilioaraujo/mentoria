@@ -70,12 +70,7 @@ class AnimalController extends Controller
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         $response = $this->animalService->corrigirAnimal($request, $id);
-        if ($response['success'] && $response['status_code'] == 200) {
-            return Response(
-                [],
-                $response['status_code']
-            );
-        }
+        
         return Response(
             [],
             $response['status_code']
@@ -84,12 +79,22 @@ class AnimalController extends Controller
 
     public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
-        return $this->animalService->alterarAnimal($request, $id);
+        $response = $this->animalService->alterarAnimal($request, $id);
+        
+        return Response(
+            [],
+            $response['status_code']
+        );
     }
 
     public function removerAnimal(int $id)
     {
-        return $this->animalService->removerAnimal($id);
+        $response = $this->animalService->removerAnimal($id);
+        
+        return Response(
+            [],
+            $response['status_code']
+        );
     }
 
     public function racas()

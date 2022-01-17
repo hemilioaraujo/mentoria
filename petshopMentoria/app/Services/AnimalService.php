@@ -65,45 +65,86 @@ class AnimalService
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         try {
-            // [FIXME: QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
+            // [FIXME:] QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
             if ($this->repository->update($request->all(), $id)) {
-                return ['success' => true, 'data' => [], 'status_code' => StatusCodeInterface::STATUS_OK];
+                return [
+                    'success' => true,
+                    'data' => [],
+                    'status_code' => StatusCodeInterface::STATUS_OK
+                ];
             }
-            return ['success' => true, 'data' => [], 'status_code' => StatusCodeInterface::STATUS_NOT_FOUND];
+            return [
+                'success' => true,
+                'data' => [],
+                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
+            ];
         } catch (Exception $e) {
-            Log::error("Erro ao corrigir animal.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            Log::error(
+                "Erro ao corrigir animal.",
+                ['exception' => $e->getMessage()]
+            );
+            return [
+                'success' => false,
+                'exception' => $e->getMessage(),
+                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
+            ];
         }
     }
 
     public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
-        if ($this->repository->update($request->all(), $id)) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                StatusCodeInterface::STATUS_OK
+        try {
+            if ($this->repository->update($request->all(), $id)) {
+                return [
+                    'success' => true,
+                    'data' => [],
+                    'status_code' => StatusCodeInterface::STATUS_OK
+                ];
+            }
+            return [
+                'success' => true,
+                'data' => [],
+                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
+            ];
+        } catch (Exception $e) {
+            Log::error(
+                "Erro ao alterar animal.",
+                ['exception' => $e->getMessage()]
             );
+            return [
+                'success' => false,
+                'exception' => $e->getMessage(),
+                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
+            ];
         }
-
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
     }
 
     public function removerAnimal(int $id)
     {
-        if ($this->repository->delete($id)) {
-            return Response(
-                [],
-                StatusCodeInterface::STATUS_NO_CONTENT
+        try {
+            if ($this->repository->delete($id)) {
+                return [
+                    'success' => true,
+                    'data' => [],
+                    'status_code' => StatusCodeInterface::STATUS_NO_CONTENT
+                ];
+            }
+            return [
+                'success' => true,
+                'data' => [],
+                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
+            ];
+        } catch (Exception $e) {
+            Log::error(
+                "Erro ao excluir animal.",
+                ['exception' => $e->getMessage()]
             );
+            return [
+                'success' => false,
+                'data' => [],
+                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
+            ];
         }
-
-        return Response(
-            [],
-            StatusCodeInterface::STATUS_NOT_FOUND
-        );
     }
 
     public function racas()
