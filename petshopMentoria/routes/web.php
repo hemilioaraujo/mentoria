@@ -1,9 +1,10 @@
 <?php
 
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TesteController;
 use App\Http\Controllers\web\AnimaisController;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     echo "show";
 });
 
-Route::get('/animais',[AnimaisController::class,'listarAnimais'])->name('listarAnimais');
-Route::post('/animais',[AnimaisController::class,'registrarAnimal'])->name('registrarAnimais');
+Route::get('/animais', [AnimaisController::class, 'listarAnimais'])->name('listarAnimais');
+Route::post('/animais', [AnimaisController::class, 'registrarAnimal'])->name('registrarAnimais');
