@@ -36,14 +36,14 @@ Route::delete('/animais/{id}', [AnimalController::class, 'removerAnimal']);
 /**
  * Rotas para Tutores
  */
-Route::get('/tutores', [TutorController::class, 'listarTutores']);
-Route::get('/tutores/{id}', [TutorController::class, 'exibirTutor']);
+Route::get('/tutores', [TutorController::class, 'listarTutores'])->name('tutores.listar');
+Route::get('/tutores/{id}', [TutorController::class, 'exibirTutor'])->name('tutores.exibir');
 Route::get('/tutores/{id}/animais', [TutorController::class, 'listarAnimaisDoTutor']);
 Route::get('/tutores/{id}/animais/{id_animal}', [TutorController::class, 'listarAnimaisDoTutorPorId']);
-Route::post('/tutores', [TutorController::class, 'registrarTutor']);
-Route::put('/tutores/{id}', [TutorController::class, 'alterarTutor']);
-Route::patch('/tutores/{id}', [TutorController::class, 'corrigirTutor']);
-Route::delete('/tutores/{id}', [TutorController::class, 'removerTutor']);
+Route::post('/tutores', [TutorController::class, 'registrarTutor'])->name('tutores.registrar');
+Route::put('/tutores/{id}', [TutorController::class, 'alterarTutor'])->name('tutores.alterar');
+Route::patch('/tutores/{id}', [TutorController::class, 'corrigirTutor'])->name('tutores.corrigir');
+Route::delete('/tutores/{id}', [TutorController::class, 'removerTutor'])->name('tutores.remover');
 
 /**
  * Rotas para Serviços
