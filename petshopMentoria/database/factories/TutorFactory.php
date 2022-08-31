@@ -11,7 +11,7 @@ class TutorFactory extends Factory
         return [
             'nome' => $this->faker->name,
             'telefone' => $this->faker->phoneNumber(),
-            'cpf' => $this->faker->numberBetween(10000000000,99999999999),
+            'cpf' => (string)$this->faker->numberBetween(10000000000, 99999999999),
         ];
     }
 }
