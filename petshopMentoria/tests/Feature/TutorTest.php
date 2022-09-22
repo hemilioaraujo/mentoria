@@ -8,17 +8,11 @@ use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use stdClass;
 
 class TutorTest extends TestCase
 {
     use RefreshDatabase;
-
-    public function test_base_resource_exists()
-    {
-        $response = $this->get('api/tutores');
-
-        $response->assertStatus(StatusCodeInterface::STATUS_OK);
-    }
 
     public function test_should_return_all_tutors()
     {
@@ -59,7 +53,7 @@ class TutorTest extends TestCase
         });
     }
 
-    public function test_get_single_tutor()
+    public function test_get_single_tutor_passing_id()
     {
         $tutor = Tutor::factory(1)->createOne();
         $response = $this->getJson(route('tutores.exibir', [$tutor->id]));
@@ -100,5 +94,98 @@ class TutorTest extends TestCase
         $tutor = Tutor::factory(1)->createOne();
         $response = $this->getJson(route('tutores.exibir', [$tutor->id + 1]));
         $response->assertStatus(StatusCodeInterface::STATUS_NOT_FOUND);
+    }
+
+    public function test_should_persist_a_tutor()
+    {
+        $tutor = new stdClass();
+        $tutor->nome = 'Joaquim';
+        $tutor->telefone = '(32)99999-0000';
+        $tutor->cpf = '12345678900';
+
+        $responsePost = $this->postJson(route('tutores.registrar'), [
+            'nome' => $tutor->nome,
+            'telefone' => $tutor->telefone,
+            'cpf' => $tutor->cpf,
+        ]);
+
+        $responsePost->assertStatus(StatusCodeInterface::STATUS_CREATED);
+
+        $tutorRegistrado=Tutor::all()->last();
+        $responseGet = $this->getJson(route('tutores.exibir', [$tutorRegistrado->id]));
+        $responseGet->assertStatus(StatusCodeInterface::STATUS_OK);
+
+        $responseGet->assertJson([
+            'nome' => $tutor->nome,
+            'telefone' => $tutor->telefone,
+            'cpf' => $tutor->cpf,
+        ]);
+    }
+
+    public function test_should_update_a_tutor_using_put()
+    {
+        $tutor = Tutor::factory()->createOne([
+            'nome' => 'Manuel',
+            'telefone' => '(32)99999-8888',
+            'cpf' => '11111111111'
+        ]);
+
+        $response = $this->putJson(route('tutores.alterar', ['id' => $tutor->id]), [
+            'nome' => 'Maria',
+            'telefone' => '(31)99999-7777',
+            'cpf' => '22222222222',
+        ]);
+
+        $response->assertStatus(StatusCodeInterface::STATUS_OK);
+
+        $responseGet = $this->getJson(route('tutores.exibir', [$tutor->id]));
+        $responseGet->assertStatus(StatusCodeInterface::STATUS_OK);
+
+        $responseGet->assertJson([
+            'nome' => 'Maria',
+            'telefone' => '(31)99999-7777',
+            'cpf' => '22222222222',
+        ]);
+    }
+
+    public function test_should_update_a_tutor_using_patch()
+    {
+        $tutor = Tutor::factory()->createOne([
+            'nome' => 'Manuel',
+            'telefone' => '(32)99999-8888',
+            'cpf' => '11111111111'
+        ]);
+
+        $response = $this->patchJson(route('tutores.corrigir', ['id' => $tutor->id]), [
+            'nome' => 'Maria',
+            'cpf' => '22222222222',
+        ]);
+
+        $response->assertStatus(StatusCodeInterface::STATUS_OK);
+
+        $responseGet = $this->getJson(route('tutores.exibir', [$tutor->id]));
+        $responseGet->assertStatus(StatusCodeInterface::STATUS_OK);
+
+        $responseGet->assertJson([
+            'nome' => 'Maria',
+            'telefone' => '(32)99999-8888',
+            'cpf' => '22222222222',
+        ]);
+    }
+
+    public function test_should_delete_a_tutor()
+    {
+        $tutor = Tutor::factory()->createOne([
+            'nome' => 'Joaquim',
+            'telefone' => '(32)99999-8888',
+            'cpf' => '11111111111'
+        ]);
+
+        $responseGet = $this->getJson(route('tutores.exibir', [$tutor->id]));
+        $responseGet->assertStatus(StatusCodeInterface::STATUS_OK);
+        $responseDelete = $this->deleteJson(route('tutores.remover', ['id' => $tutor->id]));
+        $responseDelete->assertStatus(StatusCodeInterface::STATUS_NO_CONTENT);
+        $responseGet = $this->getJson(route('tutores.exibir', [$tutor->id]));
+        $responseGet->assertStatus(StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }
