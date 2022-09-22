@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Rotas para Animais
  */
-Route::get('/animais', [AnimalController::class, 'listarAnimais']);
+Route::get('/animais', [AnimalController::class, 'listarAnimais'])->name('animais.listar');
 Route::get('/animais/racas', [AnimalController::class, 'racas']);
 Route::get('/animais/{id}', [AnimalController::class, 'exibirAnimal']);
 Route::post('/animais', [AnimalController::class, 'registrarAnimal']);
