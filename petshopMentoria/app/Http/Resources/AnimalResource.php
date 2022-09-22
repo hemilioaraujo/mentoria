@@ -20,6 +20,8 @@ class AnimalResource extends JsonResource
             'idade' => $this->idade,
             'tipo' => $this->tipo,
             'raca' => $this->raca,
+            'created_at'=>$this->created_at,
+            'updated_at'=>$this->updated_at,
             'tutor' => [
                 'id' => $this->tutor->id,
                 'nome' => $this->tutor->nome,
