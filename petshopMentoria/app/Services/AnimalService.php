@@ -29,10 +29,10 @@ class AnimalService
     {
         try {
             $animais = $this->repository->all();
-            return ['success' => true, 'data' => $animais, 'status_code' => StatusCodeInterface::STATUS_OK];
+            return new RespostaDTO(StatusCodeInterface::STATUS_OK, $animais);
         } catch (Exception $e) {
             Log::error("Erro ao listar animais.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
     }
 

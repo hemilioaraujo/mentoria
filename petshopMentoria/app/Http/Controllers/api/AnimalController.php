@@ -25,15 +25,15 @@ class AnimalController extends Controller
     public function listarAnimais(AnimalRepositoryInterface $model)
     {
         $response = $this->animalService->listarAnimais();
-        if ($response['success']) {
+        if ($response->ok) {
             return Response(
-                AnimalResource::collection($response['data']),
-                $response['status_code']
+                AnimalResource::collection($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
