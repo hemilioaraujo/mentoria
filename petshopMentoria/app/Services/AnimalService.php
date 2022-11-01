@@ -104,27 +104,15 @@ class AnimalService
     {
         try {
             if ($this->repository->delete($id)) {
-                return [
-                    'success' => true,
-                    'data' => [],
-                    'status_code' => StatusCodeInterface::STATUS_NO_CONTENT
-                ];
+                return new RespostaDTO(StatusCodeInterface::STATUS_NO_CONTENT, []);
             }
-            return [
-                'success' => true,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, []);
         } catch (Exception $e) {
             Log::error(
                 "Erro ao excluir animal.",
                 ['exception' => $e->getMessage()]
             );
-            return [
-                'success' => false,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
         }
     }
 
