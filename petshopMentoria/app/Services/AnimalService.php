@@ -70,27 +70,17 @@ class AnimalService
         try {
             // [FIXME:] QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
             if ($this->repository->update($request->all(), $id)) {
-                return [
-                    'success' => true,
-                    'data' => [],
-                    'status_code' => StatusCodeInterface::STATUS_OK
-                ];
+                return new RespostaDTO(StatusCodeInterface::STATUS_OK, []);
             }
             return [
-                'success' => true,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
+                new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, [])
             ];
         } catch (Exception $e) {
             Log::error(
                 "Erro ao corrigir animal.",
                 ['exception' => $e->getMessage()]
             );
-            return [
-                'success' => false,
-                'exception' => $e->getMessage(),
-                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
         }
     }
 
