@@ -55,13 +55,14 @@ class AnimalService
             $animal = $this->repository->find($id);
         } catch (Exception $e) {
             Log::error("Erro ao exibir animal.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
 
         if ($animal) {
-            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_OK];
+            return new RespostaDTO(StatusCodeInterface::STATUS_OK, $animal);
         }
-        return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_NOT_FOUND];
+
+        return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, $animal);
     }
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)

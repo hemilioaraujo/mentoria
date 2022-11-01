@@ -55,15 +55,15 @@ class AnimalController extends Controller
     public function exibirAnimal(int $id)
     {
         $response = $this->animalService->exibirAnimal($id);
-        if ($response['success'] && $response['status_code'] == 200) {
+        if ($response->ok) {
             return Response(
-                new AnimalResource($response['data']),
-                $response['status_code']
+                new AnimalResource($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
