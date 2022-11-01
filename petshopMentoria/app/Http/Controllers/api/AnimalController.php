@@ -40,15 +40,15 @@ class AnimalController extends Controller
     public function registrarAnimal(AnimalPostRequest $request)
     {
         $response = $this->animalService->registrarAnimal($request);
-        if ($response['success']) {
+        if ($response->ok) {
             return Response(
-                new AnimalResource($response['data']),
-                $response['status_code']
+                new AnimalResource($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
@@ -70,7 +70,7 @@ class AnimalController extends Controller
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         $response = $this->animalService->corrigirAnimal($request, $id);
-        
+
         return Response(
             [],
             $response['status_code']
@@ -80,7 +80,7 @@ class AnimalController extends Controller
     public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
         $response = $this->animalService->alterarAnimal($request, $id);
-        
+
         return Response(
             [],
             $response['status_code']
@@ -90,7 +90,7 @@ class AnimalController extends Controller
     public function removerAnimal(int $id)
     {
         $response = $this->animalService->removerAnimal($id);
-        
+
         return Response(
             [],
             $response['status_code']

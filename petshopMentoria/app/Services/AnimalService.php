@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\RespostaDTO;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,7 @@ use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Http\Requests\Animal\AnimalPostRequest;
 use App\Http\Requests\Animal\AnimalPatchRequest;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class AnimalService
 {
@@ -40,10 +42,10 @@ class AnimalService
     {
         try {
             $animal = $this->repository->create($request->all());
-            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_CREATED];
+            return new RespostaDTO(StatusCodeInterface::STATUS_CREATED, $animal);
         } catch (Exception $e) {
             Log::error("Erro ao registrar animal.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
     }
 
