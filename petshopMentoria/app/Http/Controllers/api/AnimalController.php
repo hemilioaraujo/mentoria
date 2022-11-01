@@ -25,75 +25,75 @@ class AnimalController extends Controller
     public function listarAnimais(AnimalRepositoryInterface $model)
     {
         $response = $this->animalService->listarAnimais();
-        if ($response['success']) {
+        if ($response->ok) {
             return Response(
-                AnimalResource::collection($response['data']),
-                $response['status_code']
+                AnimalResource::collection($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
     public function registrarAnimal(AnimalPostRequest $request)
     {
         $response = $this->animalService->registrarAnimal($request);
-        if ($response['success']) {
+        if ($response->ok) {
             return Response(
-                new AnimalResource($response['data']),
-                $response['status_code']
+                new AnimalResource($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
     public function exibirAnimal(int $id)
     {
         $response = $this->animalService->exibirAnimal($id);
-        if ($response['success'] && $response['status_code'] == 200) {
+        if ($response->ok) {
             return Response(
-                new AnimalResource($response['data']),
-                $response['status_code']
+                new AnimalResource($response->data),
+                $response->status_code
             );
         }
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         $response = $this->animalService->corrigirAnimal($request, $id);
-        
+
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
     public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
         $response = $this->animalService->alterarAnimal($request, $id);
-        
+
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
     public function removerAnimal(int $id)
     {
         $response = $this->animalService->removerAnimal($id);
-        
+
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 

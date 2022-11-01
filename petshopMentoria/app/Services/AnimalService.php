@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\RespostaDTO;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,7 @@ use App\Http\Requests\Animal\AnimalPutRequest;
 use App\Http\Requests\Animal\AnimalPostRequest;
 use App\Http\Requests\Animal\AnimalPatchRequest;
 use App\Repositories\Contracts\AnimalRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class AnimalService
 {
@@ -29,10 +31,10 @@ class AnimalService
     {
         try {
             $animais = $this->repository->all();
-            return ['success' => true, 'data' => $animais, 'status_code' => StatusCodeInterface::STATUS_OK];
+            return new RespostaDTO(StatusCodeInterface::STATUS_OK, $animais);
         } catch (Exception $e) {
             Log::error("Erro ao listar animais.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
     }
 
@@ -40,10 +42,10 @@ class AnimalService
     {
         try {
             $animal = $this->repository->create($request->all());
-            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_CREATED];
+            return new RespostaDTO(StatusCodeInterface::STATUS_CREATED, $animal);
         } catch (Exception $e) {
             Log::error("Erro ao registrar animal.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
     }
 
@@ -53,13 +55,14 @@ class AnimalService
             $animal = $this->repository->find($id);
         } catch (Exception $e) {
             Log::error("Erro ao exibir animal.", ['exception' => $e->getMessage()]);
-            return ['success' => false, 'exception' => $e->getMessage(), 'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
         }
 
         if ($animal) {
-            return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_OK];
+            return new RespostaDTO(StatusCodeInterface::STATUS_OK, $animal);
         }
-        return ['success' => true, 'data' => $animal, 'status_code' => StatusCodeInterface::STATUS_NOT_FOUND];
+
+        return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, $animal);
     }
 
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
@@ -67,27 +70,17 @@ class AnimalService
         try {
             // [FIXME:] QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
             if ($this->repository->update($request->all(), $id)) {
-                return [
-                    'success' => true,
-                    'data' => [],
-                    'status_code' => StatusCodeInterface::STATUS_OK
-                ];
+                return new RespostaDTO(StatusCodeInterface::STATUS_OK, []);
             }
             return [
-                'success' => true,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
+                new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, [])
             ];
         } catch (Exception $e) {
             Log::error(
                 "Erro ao corrigir animal.",
                 ['exception' => $e->getMessage()]
             );
-            return [
-                'success' => false,
-                'exception' => $e->getMessage(),
-                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
         }
     }
 
@@ -95,27 +88,15 @@ class AnimalService
     {
         try {
             if ($this->repository->update($request->all(), $id)) {
-                return [
-                    'success' => true,
-                    'data' => [],
-                    'status_code' => StatusCodeInterface::STATUS_OK
-                ];
+                return new RespostaDTO(StatusCodeInterface::STATUS_OK, []);
             }
-            return [
-                'success' => true,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, []);
         } catch (Exception $e) {
             Log::error(
                 "Erro ao alterar animal.",
                 ['exception' => $e->getMessage()]
             );
-            return [
-                'success' => false,
-                'exception' => $e->getMessage(),
-                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
         }
     }
 
@@ -123,27 +104,15 @@ class AnimalService
     {
         try {
             if ($this->repository->delete($id)) {
-                return [
-                    'success' => true,
-                    'data' => [],
-                    'status_code' => StatusCodeInterface::STATUS_NO_CONTENT
-                ];
+                return new RespostaDTO(StatusCodeInterface::STATUS_NO_CONTENT, []);
             }
-            return [
-                'success' => true,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_NOT_FOUND
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, []);
         } catch (Exception $e) {
             Log::error(
                 "Erro ao excluir animal.",
                 ['exception' => $e->getMessage()]
             );
-            return [
-                'success' => false,
-                'data' => [],
-                'status_code' => StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE
-            ];
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
         }
     }
 
