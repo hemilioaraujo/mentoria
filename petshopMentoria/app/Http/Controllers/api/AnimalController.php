@@ -83,7 +83,7 @@ class AnimalController extends Controller
 
         return Response(
             [],
-            $response['status_code']
+            $response->status_code
         );
     }
 
