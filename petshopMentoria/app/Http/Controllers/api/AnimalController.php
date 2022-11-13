@@ -71,34 +71,31 @@ class AnimalController extends Controller
     {
         $response = $this->animalService->corrigirAnimal($request, $id);
 
-        return Response(
-            [],
-            $response->status_code
-        );
+        return Response([], $response->status_code);
     }
 
     public function alterarAnimal(AnimalPutRequest $request, int $id)
     {
         $response = $this->animalService->alterarAnimal($request, $id);
 
-        return Response(
-            [],
-            $response->status_code
-        );
+        return Response([], $response->status_code);
     }
 
     public function removerAnimal(int $id)
     {
         $response = $this->animalService->removerAnimal($id);
 
-        return Response(
-            [],
-            $response->status_code
-        );
+        return Response([], $response->status_code);
     }
 
     public function racas()
     {
-        return $this->animalService->racas();
+        $response = $this->animalService->racas();
+
+        if ($response->ok) {
+            return Response($response->data, $response->status_code);
+        }
+
+        return Response([], $response->status_code);
     }
 }
