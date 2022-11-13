@@ -68,13 +68,13 @@ class AnimalService
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         try {
-            // [FIXME:] QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
-            if ($this->repository->update($request->all(), $id)) {
+            $dados =  $request->only(['nome', 'idade', 'tipo', 'raca', 'tutor_id']);
+
+            if ($this->repository->update($dados, $id)) {
                 return new RespostaDTO(StatusCodeInterface::STATUS_OK, []);
             }
-            return [
-                new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, [])
-            ];
+
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, []);
         } catch (Exception $e) {
             Log::error(
                 "Erro ao corrigir animal.",
