@@ -68,13 +68,13 @@ class AnimalService
     public function corrigirAnimal(AnimalPatchRequest $request, int $id)
     {
         try {
-            // [FIXME:] QUANDO MANDA CAMPO NÃO EXISTENTE DA ERRO]
-            if ($this->repository->update($request->all(), $id)) {
+            $dados =  $request->only(['nome', 'idade', 'tipo', 'raca', 'tutor_id']);
+
+            if ($this->repository->update($dados, $id)) {
                 return new RespostaDTO(StatusCodeInterface::STATUS_OK, []);
             }
-            return [
-                new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, [])
-            ];
+
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, []);
         } catch (Exception $e) {
             Log::error(
                 "Erro ao corrigir animal.",
@@ -118,11 +118,16 @@ class AnimalService
 
     public function racas()
     {
-        $racas = $this->getRemoteRacas();
-        return Response()->json(
-            ["raças" => $racas],
-            StatusCodeInterface::STATUS_OK
-        );
+        try {
+            $racas = $this->getRemoteRacas();
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_OK,
+                ["raças" => $racas],
+            );
+        } catch (Exception $e) {
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, []);
+        }
     }
 
     private function getRemoteRacas()
@@ -130,6 +135,7 @@ class AnimalService
         $client = new Client();
         $url = "https://dog.ceo/api/breeds/list/all";
         $response = $client->request('get', $url, ['http_errors' => false]);
+
         if ($response->getStatusCode() == StatusCodeInterface::STATUS_OK) {
             $body = json_decode($response->getBody(), true);
             $racas = array_keys($body['message']);

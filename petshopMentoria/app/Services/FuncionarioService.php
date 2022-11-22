@@ -2,11 +2,15 @@
 
 namespace App\Services;
 
-use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
-use App\Http\Requests\Funcionario\FuncionarioRequest;
-use App\Repositories\Contracts\FuncionarioRepositoryInterface;
+use Exception;
+use App\DTO\RespostaDTO;
+use Illuminate\Support\Facades\Log;
 use Facade\FlareClient\Http\Response;
 use Fig\Http\Message\StatusCodeInterface;
+use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Funcionario\FuncionarioRequest;
+use App\Http\Requests\Funcionario\FuncionarioPatchRequest;
+use App\Repositories\Contracts\FuncionarioRepositoryInterface;
 
 class FuncionarioService
 {
@@ -19,67 +23,149 @@ class FuncionarioService
 
     public function listarFuncionarios()
     {
-        $funcionarios = $this->repository->all();
-        return Response($funcionarios, StatusCodeInterface::STATUS_OK);
+        try {
+            $funcionarios = $this->repository->all();
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_OK,
+                $funcionarios
+            );
+        } catch (Exception $e) {
+            Log::error("Erro ao listar funcionários.", ['exception' => $e->getMessage()]);
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
+            );
+        }
     }
 
     public function registrarFuncionario(FuncionarioRequest $request)
     {
-        $funcionario = $this->repository->create($request->all());
-        return Response($funcionario, StatusCodeInterface::STATUS_CREATED);
+        try {
+            $funcionario = $this->repository->create($request->all());
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_CREATED,
+                $funcionario
+            );
+        } catch (Exception $e) {
+            Log::error("Erro ao registrar funcionário.", ['exception' => $e->getMessage()]);
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
+            );
+        }
     }
 
     public function exibirFuncionario(int $id)
     {
-        $funcionario = $this->repository->find($id);
-        if ($funcionario) {
-            return Response($funcionario, StatusCodeInterface::STATUS_OK);
+        try {
+            $funcionario = $this->repository->find($id);
+
+            if ($funcionario) {
+                return new RespostaDTO(
+                    StatusCodeInterface::STATUS_OK,
+                    $funcionario
+                );
+            }
+        } catch (Exception $e) {
+            Log::error("Erro ao exibir funcionário.", ['exception' => $e->getMessage()]);
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
+            );
         }
 
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+        return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, new Collection([]));
     }
 
     public function corrigirFuncionario(FuncionarioPatchRequest $request, int $id)
     {
-        if ($this->repository->update($request->all(), $id)) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                StatusCodeInterface::STATUS_OK
+        try {
+            if ($this->repository->update($request->all(), $id)) {
+                return new RespostaDTO(
+                    StatusCodeInterface::STATUS_OK,
+                    new Collection([])
+                );
+            }
+
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, new Collection([]));
+        } catch (Exception $e) {
+            Log::error("Erro ao corrigir funcionário.", ['exception' => $e->getMessage()]);
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
             );
         }
-
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
     public function alterarFuncionario(FuncionarioRequest $request, int $id)
     {
-        if ($this->repository->update($request->all(), $id)) {
-            return Response(
-                ['status' => 'Recurso atualizado com sucesso.'],
-                StatusCodeInterface::STATUS_OK
+        try {
+            if ($this->repository->update($request->all(), $id)) {
+                return new RespostaDTO(
+                    StatusCodeInterface::STATUS_OK,
+                    new Collection([])
+                );
+            }
+
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, new Collection([]));
+        } catch (Exception $e) {
+            Log::error("Erro ao alterar funcionário.", ['exception' => $e->getMessage()]);
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
             );
         }
-
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
     public function removerFuncionario(int $id)
     {
-        if ($this->repository->delete($id)) {
-            return Response([], StatusCodeInterface::STATUS_NO_CONTENT);
-        }
+        try {
+            if ($this->repository->delete($id)) {
+                return new RespostaDTO(StatusCodeInterface::STATUS_NO_CONTENT, new Collection([]));
+            }
 
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+            return new RespostaDTO(StatusCodeInterface::STATUS_NOT_FOUND, new Collection([]));
+        } catch (Exception $e) {
+            Log::error(
+                "Erro ao excluir funcionário.",
+                ['exception' => $e->getMessage()]
+            );
+
+            return new RespostaDTO(StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, new Collection([]));
+        }
     }
 
     public function agendamentos(int $id)
     {
-        $funcionario = $this->repository->find($id);
-        if ($funcionario) {
-            return $funcionario->agendamentos->toJson();
-            return Response($funcionario->agendamentos, StatusCodeInterface::STATUS_OK);
-        }
+        try {
+            $funcionario = $this->repository->find($id);
+            
+            if ($funcionario) {
+                return $funcionario->agendamentos->toJson();
+                return Response($funcionario->agendamentos, StatusCodeInterface::STATUS_OK);
+            }
 
-        return Response([], StatusCodeInterface::STATUS_NOT_FOUND);
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_NOT_FOUND,
+                new Collection([])
+            );
+        } catch (Exception $e) {
+            Log::error(
+                "Erro ao listar agendamentos.",
+                ['exception' => $e->getMessage()]
+            );
+
+            return new RespostaDTO(
+                StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+                new Collection([])
+            );
+        }
     }
 }

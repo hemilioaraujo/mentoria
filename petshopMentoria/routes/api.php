@@ -25,13 +25,15 @@ use Illuminate\Support\Facades\Route;
 /**
  * Rotas para Animais
  */
-Route::get('/animais', [AnimalController::class, 'listarAnimais'])->name('animais.listar');
-Route::get('/animais/racas', [AnimalController::class, 'racas']);
-Route::get('/animais/{id}', [AnimalController::class, 'exibirAnimal']);
-Route::post('/animais', [AnimalController::class, 'registrarAnimal']);
-Route::put('/animais/{id}', [AnimalController::class, 'alterarAnimal']);
-Route::patch('/animais/{id}', [AnimalController::class, 'corrigirAnimal']);
-Route::delete('/animais/{id}', [AnimalController::class, 'removerAnimal']);
+Route::name("animais.")->prefix('/animais')->group(function () {
+    Route::get('/', [AnimalController::class, 'listarAnimais'])->name('listar');
+    Route::get('/racas', [AnimalController::class, 'racas'])->name('racas');
+    Route::get('/{id}', [AnimalController::class, 'exibirAnimal'])->name('exibir');
+    Route::post('/', [AnimalController::class, 'registrarAnimal'])->name('registrar');
+    Route::put('/{id}', [AnimalController::class, 'alterarAnimal'])->name('alterar');
+    Route::patch('/{id}', [AnimalController::class, 'corrigirAnimal'])->name('corrigir');
+    Route::delete('/{id}', [AnimalController::class, 'removerAnimal'])->name('remover');
+});
 
 /**
  * Rotas para Tutores
