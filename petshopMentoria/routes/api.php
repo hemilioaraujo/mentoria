@@ -11,20 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-/**
- * Rotas para Animais
- */
 Route::name("animais.")->prefix('/animais')->group(function () {
     Route::get('/', [AnimalController::class, 'listarAnimais'])->name('listar');
     Route::get('/racas', [AnimalController::class, 'racas'])->name('racas');
@@ -35,62 +21,54 @@ Route::name("animais.")->prefix('/animais')->group(function () {
     Route::delete('/{id}', [AnimalController::class, 'removerAnimal'])->name('remover');
 });
 
-/**
- * Rotas para Tutores
- */
-Route::get('/tutores', [TutorController::class, 'listarTutores'])->name('tutores.listar');
-Route::get('/tutores/{id}', [TutorController::class, 'exibirTutor'])->name('tutores.exibir');
-Route::get('/tutores/{id}/animais', [TutorController::class, 'listarAnimaisDoTutor']);
-Route::get('/tutores/{id}/animais/{id_animal}', [TutorController::class, 'listarAnimaisDoTutorPorId']);
-Route::post('/tutores', [TutorController::class, 'registrarTutor'])->name('tutores.registrar');
-Route::put('/tutores/{id}', [TutorController::class, 'alterarTutor'])->name('tutores.alterar');
-Route::patch('/tutores/{id}', [TutorController::class, 'corrigirTutor'])->name('tutores.corrigir');
-Route::delete('/tutores/{id}', [TutorController::class, 'removerTutor'])->name('tutores.remover');
+Route::name("tutores.")->prefix('/tutores')->group(function () {
+    Route::get('/', [TutorController::class, 'listarTutores'])->name('listar');
+    Route::get('/{id}', [TutorController::class, 'exibirTutor'])->name('exibir');
+    Route::get('/{id}/animais', [TutorController::class, 'listarAnimaisDoTutor']);
+    Route::get('/{id}/animais/{id_animal}', [TutorController::class, 'listarAnimaisDoTutorPorId']);
+    Route::post('/', [TutorController::class, 'registrarTutor'])->name('registrar');
+    Route::put('/{id}', [TutorController::class, 'alterarTutor'])->name('alterar');
+    Route::patch('/{id}', [TutorController::class, 'corrigirTutor'])->name('corrigir');
+    Route::delete('/{id}', [TutorController::class, 'removerTutor'])->name('remover');
+});
 
-/**
- * Rotas para Serviços
- */
-Route::get('/servicos', [ServicoController::class, 'listarServicos']);
-Route::get('/servicos/{id}', [ServicoController::class, 'exibirServico']);
-Route::post('/servicos', [ServicoController::class, 'registrarServico']);
-Route::put('/servicos/{id}', [ServicoController::class, 'alterarServico']);
-Route::patch('/servicos/{id}', [ServicoController::class, 'corrigirServico']);
-Route::delete('/servicos/{id}', [ServicoController::class, 'removerServico']);
+Route::name("servicos.")->prefix('/servicos')->group(function () {
+    Route::get('/servicos', [ServicoController::class, 'listarServicos'])->name('listar');
+    Route::get('/servicos/{id}', [ServicoController::class, 'exibirServico'])->name('exibir');
+    Route::post('/servicos', [ServicoController::class, 'registrarServico'])->name('registrar');
+    Route::put('/servicos/{id}', [ServicoController::class, 'alterarServico'])->name('alterar');
+    Route::patch('/servicos/{id}', [ServicoController::class, 'corrigirServico'])->name('corrigir');
+    Route::delete('/servicos/{id}', [ServicoController::class, 'removerServico'])->name('remover');
+});
 
-/**
- * Rotas para Funcionários
- */
-Route::get('/funcionarios', [FuncionarioController::class, 'listarFuncionarios']);
-Route::get('/funcionarios/{id}', [FuncionarioController::class, 'exibirFuncionario']);
-Route::get('/funcionarios/{id}/agendamentos', [AgendamentoController::class, 'listarAgendamentosPorFuncionario']);
-Route::post('/funcionarios', [FuncionarioController::class, 'registrarFuncionario']);
-Route::put('/funcionarios/{id}', [FuncionarioController::class, 'alterarFuncionario']);
-Route::patch('/funcionarios/{id}', [FuncionarioController::class, 'corrigirFuncionario']);
-Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'removerFuncionario']);
+Route::name("funcionarios.")->prefix('/funcionarios')->group(function () {
+    Route::get('/', [FuncionarioController::class, 'listarFuncionarios'])->name('listar');
+    Route::get('/{id}', [FuncionarioController::class, 'exibirFuncionario'])->name('exibir');
+    Route::get('/funcionarios/{id}/agendamentos', [AgendamentoController::class, 'listarAgendamentosPorFuncionario'])->name('agendamentos');
+    Route::post('/', [FuncionarioController::class, 'registrarFuncionario'])->name('registrar');
+    Route::put('/{id}', [FuncionarioController::class, 'alterarFuncionario'])->name('alterar');
+    Route::patch('/{id}', [FuncionarioController::class, 'corrigirFuncionario'])->name('corrigir');
+    Route::delete('/{id}', [FuncionarioController::class, 'removerFuncionario'])->name('remover');
+});
 
-/**
- * Rotas para Funcionários-Serviços
- */
-Route::get('/funcionarios-servicos', [FuncionarioServicoController::class, 'listarFuncionarioServicos']);
-Route::get('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'exibirFuncionarioServico']);
-Route::post('/funcionarios-servicos', [FuncionarioServicoController::class, 'registrarFuncionarioServico']);
-Route::put('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'alterarFuncionarioServico']);
-Route::patch('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'corrigirFuncionarioServico']);
-Route::delete('/funcionarios-servicos/{id}', [FuncionarioServicoController::class, 'removerFuncionarioServico']);
+Route::name("funcionarios-servicos.")->prefix('/funcionarios-servicos')->group(function () {
+    Route::get('/', [FuncionarioServicoController::class, 'listarFuncionarioServicos'])->name('listar');
+    Route::get('/{id}', [FuncionarioServicoController::class, 'exibirFuncionarioServico'])->name('exibir');
+    Route::post('/', [FuncionarioServicoController::class, 'registrarFuncionarioServico'])->name('registrar');
+    Route::put('/{id}', [FuncionarioServicoController::class, 'alterarFuncionarioServico'])->name('alterar');
+    Route::patch('/{id}', [FuncionarioServicoController::class, 'corrigirFuncionarioServico'])->name('corrigir');
+    Route::delete('/{id}', [FuncionarioServicoController::class, 'removerFuncionarioServico'])->name('remover');
+});
 
-/**
- * Rotas para Agendamentos
- */
-Route::get('/agendamentos', [AgendamentoController::class, 'listarAgendamentos']);
-Route::get('/agendamentos/{id}', [AgendamentoController::class, 'exibirAgendamento']);
-Route::post('/agendamentos', [AgendamentoController::class, 'registrarAgendamento']);
-Route::put('/agendamentos/{id}', [AgendamentoController::class, 'alterarAgendamento']);
-// Route::patch('/agendamentos/{id}', [AgendamentoController::class, 'corrigirAgendamento']);
-Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'removerAgendamento']);
+Route::name("agendamentos.")->prefix('/agendamentos')->group(function () {
+    Route::get('/', [AgendamentoController::class, 'listarAgendamentos'])->name('listar');
+    Route::get('/{id}', [AgendamentoController::class, 'exibirAgendamento'])->name('exibir');
+    Route::post('/', [AgendamentoController::class, 'registrarAgendamento'])->name('registrar');
+    Route::put('/{id}', [AgendamentoController::class, 'alterarAgendamento'])->name('alterar');
+    // Route::patch('/{id}', [AgendamentoController::class, 'corrigirAgendamento'])->name('corrigir');
+    Route::delete('/{id}', [AgendamentoController::class, 'removerAgendamento'])->name('remover');
+});
 
-/**
- * Rota de Fallback
- */
 Route::fallback(function () {
     return Response(['message' => 'Endpoint não encontrado.'], StatusCodeInterface::STATUS_NOT_FOUND);
 });
