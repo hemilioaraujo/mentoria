@@ -8,11 +8,6 @@ use Illuminate\Database\Seeder;
 
 class AnimalSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $hemilio = Tutor::where('cpf', '12345678900')->get()->first();
